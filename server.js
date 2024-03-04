@@ -1,9 +1,9 @@
-const express = require("express");
-const rateLimit = require('express-rate-limit');
+import express, { json } from "express";
+import rateLimit from 'express-rate-limit';
 
-const connectDb = require("./utils/db");
+import connectDb from "./utils/db";
 const dotenv = require("dotenv").config();
-const errorHandler= require ("./middlewares/errorHandler");
+import errorHandler from "./middlewares/errorHandler";
 
 
 
@@ -21,7 +21,7 @@ app.use('/api', limiter);
 
 
 const port = process.env.PORT || 300
-app.use(express.json());
+app.use(json());
 
 app.use("/api/books", require("./routes/bookRoutes"));
 app.use('/admin',require("./routes/adminRoutes"));
