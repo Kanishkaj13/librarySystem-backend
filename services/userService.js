@@ -6,13 +6,8 @@ const Feedback = require('../models/feedbackModel');
 const Donation = require('../models/donationModel'); 
 
 const userService = {
-
- 
- 
-  exploreLibraryCatalog: async () => {
-
-    try {
-      // Implement logic to retrieve the library catalog data
+   exploreLibraryCatalog: async () => {
+      try {
       const catalogData = await Book.find({}, 'title author quantity isAvailable');
       return catalogData;
     } catch (error) {
@@ -22,13 +17,11 @@ const userService = {
 
   checkOutBook: async (userId, bookId) => {
     try {
-      // Implement logic to process book checkout
-      const existingBook = await Book.findById(bookId);
+    const existingBook = await Book.findById(bookId);
 
       if (!existingBook || !existingBook.isAvailable) {
         throw new Error('Book not available for checkout');
       }
-
       const transactionData = {
         userId,
         bookId,
@@ -38,8 +31,6 @@ const userService = {
 
       const newTransaction = new Transaction(transactionData);
       await newTransaction.save();
-
-      // Update book availability status
       await Book.findByIdAndUpdate(bookId, { $set: { isAvailable: false } });
 
       return { message: 'Checkout processed successfully' };
@@ -53,8 +44,7 @@ const userService = {
   placeHoldOnBook: async (userId, bookId) => {
 
     try {
-      // Implement logic to place a hold on a book
-      const holdData = {
+       const holdData = {
         userId,
         bookId,
         timestamp: new Date(),
@@ -72,33 +62,25 @@ const userService = {
   viewAccountStatus: async (userId) => {
 
     try {
-      // Implement logic to view account status
       const userData = await User.findById(userId);
 
       if (!userData) {
         throw new Error('User not found');
       }
-
-      // Extract relevant account status information
-      const accountStatus = {
+        const accountStatus = {
         username: userData.username,
         fines: userData.fines,
-        // Include other relevant account status information
+        
       };
 
       return accountStatus;
     } catch (error) {
       throw new Error(`Error viewing account status: ${error.message}`);
     }
-
-
-   
   },
-
   offerFeedback: async (feedbackDetails) => {
     
     try {
-      // Implement logic to record user feedback
       const newFeedback = new Feedback(feedbackDetails);
       await newFeedback.save();
 
@@ -110,10 +92,7 @@ const userService = {
   },
 
   updatePersonalInformation: async (userId, updatedData) => {
-
-
-    try {
-      // Implement logic to update personal information
+      try {
       await User.findByIdAndUpdate(userId, { $set: updatedData });
 
       return { message: 'Personal information updated successfully' };
@@ -125,11 +104,7 @@ const userService = {
   },
 
   followLibraryPoliciesAndGuidelines: async () => {
-
-
-  
-      try {
-        // Implement logic to follow library policies and guidelines
+       try {
         const policyData = await Policies.find();
   
         return policyData;
@@ -142,8 +117,6 @@ const userService = {
   payFines: async (userId, amount) => {
 
     try {
-      // Implement logic to pay fines
-      // Update the User model with the specified amount
       await User.findByIdAndUpdate(userId, { $inc: { fines: -amount } });
 
       return { message: 'Fines paid successfully' };
@@ -157,7 +130,6 @@ const userService = {
   giveFeedback: async (feedbackDetails) => {
 
     try {
-      // Implement logic to record user feedback
       const newFeedback = new Feedback(feedbackDetails);
       await newFeedback.save();
 
@@ -171,7 +143,6 @@ const userService = {
   donateBook: async (donationDetails) => {
 
 try {
-      // Implement logic to process book donation
       const newDonation = new Donation(donationDetails);
       await newDonation.save();
 

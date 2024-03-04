@@ -7,13 +7,10 @@ const Report = require('../models/reportModel');
 const adminService = {
   createUser: async (userData) => {
     try {
-      // Check if the username already exists
       const existingUser = await User.findOne({ username: userData.username });
       if (existingUser) {
         throw new Error('Username already exists');
       }
-
-      // Create a new user
       const newUser = new User(userData);
       await newUser.save();
 

@@ -6,7 +6,6 @@ const User = require('../models/userModel');
 const assistantLibrarianService = {
   assistCatalogingAndOrganizing: async (bookData) => {
     try {
-      // Implement logic to assist in cataloging and organizing books
       const newBook = new Book(bookData);
       await newBook.save();
       return { message: 'Book cataloged and organized successfully' };
@@ -35,7 +34,6 @@ const assistantLibrarianService = {
 
   assistInProcessingBorrowingsAndReturns: async (userId, bookId, action) => {
     try {
-      // Implement logic to assist in processing book borrowings and returns
       const newTransaction = new Transaction({ userId, bookId, action });
       await newTransaction.save();
       if (action === 'return') {
@@ -50,8 +48,8 @@ const assistantLibrarianService = {
 
   ensureProperShelvingAndMaintainOrder: async () => {
     try {
-      // Implement logic to ensure proper shelving and maintain library order
-      // This could involve sorting books, organizing shelves, etc.
+
+      const sortedBooks = await Book.find().sort({ title: 1 });
       return { message: 'Shelving and order maintenance completed successfully' };
     } catch (error) {
       throw new Error(`Error ensuring proper shelving and maintaining order: ${error.message}`);
@@ -60,7 +58,6 @@ const assistantLibrarianService = {
 
   helpManageOverdueFinesAndFees: async (userId, amount) => {
     try {
-      // Implement logic to help manage overdue fines and fees
       await User.findByIdAndUpdate(userId, { $inc: { fines: amount } });
       return { message: 'Overdue fines and fees managed successfully' };
     } catch (error) {
@@ -70,7 +67,6 @@ const assistantLibrarianService = {
 
   provideBookInformation: async (bookTitle) => {
     try {
-      // Implement logic to provide information about books
       const book = await Book.findOne({ title: bookTitle });
 
       if (book) {

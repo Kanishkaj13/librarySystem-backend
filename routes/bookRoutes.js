@@ -1,5 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const { authenticateToken } = require('../middlewares/authenticationMiddleware');
+
+
 const {getAllBooks,postBook,getBook,updateBook,deleteBook} = require("../controllers/bookController");
 
 router.route("/").get(getAllBooks).post(postBook);

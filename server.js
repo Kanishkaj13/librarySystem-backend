@@ -1,4 +1,6 @@
 const express = require("express");
+const rateLimit = require('express-rate-limit');
+
 const connectDb = require("./utils/db");
 const dotenv = require("dotenv").config();
 const errorHandler= require ("./middlewares/errorHandler");
@@ -8,6 +10,15 @@ const userService = require('./services/userService');
 
 connectDb();
 const app = express();
+
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, 
+  max: 30,
+  message: 'Too many requests from this IP, please try again later',
+});
+
+app.use('/api', limiter);
 
 
 const port = process.env.PORT || 3000;
