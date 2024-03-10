@@ -1,9 +1,9 @@
 // accountantController.js
-const accountantService = require('../services/accountantService');
+import { monitorAndManageBudget as _monitorAndManageBudget, handleFines as _handleFines, trackAndRecordExpenses as _trackAndRecordExpenses, interactWithVendors as _interactWithVendors, assistInPlanningFinancialAllocations as _assistInPlanningFinancialAllocations, provideFinancialAdvice as _provideFinancialAdvice } from '../services/accountantService';
 
 const monitorAndManageBudget = async (req, res) => {
   try {
-    const result = await accountantService.monitorAndManageBudget();
+    const result = await _monitorAndManageBudget();
     res.json(result);
   } catch (error) {
     console.error(error);
@@ -14,7 +14,7 @@ const monitorAndManageBudget = async (req, res) => {
 const handleFines = async (req, res) => {
   try {
     const { userId, amount } = req.body;
-    const result = await accountantService.handleFines(userId, amount);
+    const result = await _handleFines(userId, amount);
     res.json(result);
   } catch (error) {
     console.error(error);
@@ -25,7 +25,7 @@ const handleFines = async (req, res) => {
 const trackAndRecordExpenses = async (req, res) => {
   try {
     const expenseDetails = req.body;
-    const result = await accountantService.trackAndRecordExpenses(expenseDetails);
+    const result = await _trackAndRecordExpenses(expenseDetails);
     res.json(result);
   } catch (error) {
     console.error(error);
@@ -36,7 +36,7 @@ const trackAndRecordExpenses = async (req, res) => {
 const interactWithVendors = async (req, res) => {
   try {
     const vendorDetails = req.body;
-    const result = await accountantService.interactWithVendors(vendorDetails);
+    const result = await _interactWithVendors(vendorDetails);
     res.json(result);
   } catch (error) {
     console.error(error);
@@ -46,7 +46,7 @@ const interactWithVendors = async (req, res) => {
 
 const assistInPlanningFinancialAllocations = async (req, res) => {
   try {
-    const result = await accountantService.assistInPlanningFinancialAllocations();
+    const result = await _assistInPlanningFinancialAllocations();
     res.json(result);
   } catch (error) {
     console.error(error);
@@ -56,7 +56,7 @@ const assistInPlanningFinancialAllocations = async (req, res) => {
 
 const provideFinancialAdvice = async (req, res) => {
   try {
-    const result = await accountantService.provideFinancialAdvice();
+    const result = await _provideFinancialAdvice();
     res.json(result);
   } catch (error) {
     console.error(error);
@@ -64,7 +64,7 @@ const provideFinancialAdvice = async (req, res) => {
   }
 };
 
-module.exports = {
+export default {
   monitorAndManageBudget,
   handleFines,
   trackAndRecordExpenses,

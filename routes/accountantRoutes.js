@@ -1,7 +1,7 @@
 
 const express = require('express');
 const router = express.Router();
-const accountantController = require('../controllers/accountantController');
+const accountantController = require('../controllers/accountantController').default;
 const { authenticateToken } = require('../middlewares/authenticationMiddleware');
 
 router.get('/monitor-manage-budget', authenticateToken, accountantController.monitorAndManageBudget);
