@@ -1,8 +1,8 @@
 
 const express = require('express');
 const router = express.Router();
-const accountantController = require('../controllers/accountantController').default;
-const { authenticateToken } = require('../middlewares/authenticationMiddleware');
+const accountantController = require('../controllers/accountantController.js');
+const { authenticateToken } = require('../middlewares/authenticationMiddleware.js');
 
 router.get('/monitor-manage-budget', authenticateToken, accountantController.monitorAndManageBudget);
 router.post('/handle-fines', authenticateToken, accountantController.handleFines);
