@@ -1,9 +1,10 @@
 import express, { json } from "express";
 import rateLimit from 'express-rate-limit';
 
-import connectDb from "./utils/db";
+import connectDb from './config/db.js';
+
 const dotenv = require("dotenv").config();
-import errorHandler from "./middlewares/errorHandler";
+import errorHandler from "./middlewares/errorHandler.js";
 
 
 

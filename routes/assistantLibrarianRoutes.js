@@ -1,8 +1,8 @@
 
 const express = require('express');
 const router = express.Router();
-const assistantLibrarianController = require('../controllers/assistantLibrarianController');
-const { authenticateToken } = require('../middlewares/authenticationMiddleware');
+const assistantLibrarianController = require('../controllers/assistantLibrarianController.js');
+const { authenticateToken } = require('../middlewares/authenticationMiddleware.js');
 
 router.post('/assist-cataloging-organizing', authenticateToken, assistantLibrarianController.assistCatalogingAndOrganizing);
 router.post('/help-with-book-search-checkouts', authenticateToken, assistantLibrarianController.helpWithBookSearchAndCheckouts);

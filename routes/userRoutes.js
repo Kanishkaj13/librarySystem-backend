@@ -1,8 +1,8 @@
 
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/userController');
-const { authenticateToken } = require('../middlewares/authenticationMiddleware');
+const userController = require('../controllers/userController.js');
+const { authenticateToken } = require('../middlewares/authenticationMiddleware.js');
 
 router.get('/explore-library-catalog', authenticateToken, userController.exploreLibraryCatalog);
 router.post('/check-out-book', authenticateToken, userController.checkOutBook);

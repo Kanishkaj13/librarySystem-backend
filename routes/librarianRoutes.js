@@ -1,8 +1,8 @@
 
 const express = require('express');
 const router = express.Router();
-const librarianController = require('../controllers/librarianController');
-const { authenticateToken } = require('../middlewares/authenticationMiddleware');
+const librarianController = require('../controllers/librarianController.js');
+const { authenticateToken } = require('../middlewares/authenticationMiddleware.js');
 
 router.post('/add-book', authenticateToken, librarianController.addBook);
 router.put('/edit-book/:bookId', authenticateToken, librarianController.editBook);

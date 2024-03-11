@@ -1,8 +1,8 @@
 
 const express = require('express');
 const router = express.Router();
-const adminController = require('../controllers/adminController');
-const { authenticateToken } = require('../middlewares/authenticationMiddleware');
+const adminController = require('../controllers/adminController.js');
+const { authenticateToken } = require('../middlewares/authenticationMiddleware.js');
 
 router.post('/create-user', authenticateToken, adminController.createUser);
 router.post('/assign-roles-permissions', authenticateToken, adminController.assignRolesAndPermissions);
