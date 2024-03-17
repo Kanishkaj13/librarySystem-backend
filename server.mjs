@@ -30,7 +30,7 @@ const limiter = rateLimit({
 app.use('/api', limiter);
 
 
-const port = process.env.PORT || 300
+const port = process.env.PORT |5002
 app.use(json());
 
 

@@ -1,8 +1,9 @@
 
-import express from 'express';
+
 import { Router } from 'express';
+const router = Router();
 import accountantController from '../controllers/accountantController.mjs';
-import { authenticateToken } from "../middlewares/authenticationMiddleware..mjs";
+import { authenticateToken } from "../middlewares/authenticationMiddleware.mjs";
 
 router.get('/monitor-manage-budget', authenticateToken, accountantController.monitorAndManageBudget);
 router.post('/handle-fines', authenticateToken, accountantController.handleFines);

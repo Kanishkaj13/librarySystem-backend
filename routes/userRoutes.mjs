@@ -1,8 +1,9 @@
 
-import express from 'express';
+
 import { Router } from 'express';
+const router = Router();
 import userController from '../controllers/userController.mjs';
-import { authenticateToken } from "../middlewares/authenticationMiddleware..mjs";
+import { authenticateToken } from "../middlewares/authenticationMiddleware.mjs";
 
 
 router.get('/explore-library-catalog', authenticateToken, userController.exploreLibraryCatalog);

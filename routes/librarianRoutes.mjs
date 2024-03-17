@@ -1,8 +1,9 @@
 
-import  express from'express';
+
 import { Router } from 'express';
+const router = Router();
 import librarianController from '../controllers/librarianController.mjs';
-import { authenticateToken } from "../middlewares/authenticationMiddleware..mjs";
+import { authenticateToken } from "../middlewares/authenticationMiddleware.mjs";
 
 
 router.post('/add-book', authenticateToken, librarianController.addBook);

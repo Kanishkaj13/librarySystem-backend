@@ -20,4 +20,4 @@ const authorizeRoles = async(req,res,next) => {
   }
 };
 
-module.exports = authorizeRoles;
+export default authorizeRoles;

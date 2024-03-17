@@ -1,5 +1,6 @@
 // expenseModel.js
-const mongoose = require('mongoose');
+
+import mongoose from'mongoose';
 
 const expenseSchema = new mongoose.Schema({
   category: { type: String, required: true },
