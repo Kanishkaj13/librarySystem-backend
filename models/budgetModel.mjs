@@ -9,4 +9,4 @@ const budgetSchema = new mongoose.Schema({
 
 const Budget = mongoose.model('Budget', budgetSchema);
 
-export {Budget};
+export  default Budget;

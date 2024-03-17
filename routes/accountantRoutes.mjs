@@ -1,7 +1,7 @@
 
 import express from 'express';
-const router = express.Router();
-const accountantController = require('../controllers/accountantController.mjs');
+import { Router } from 'express';
+import accountantController from '../controllers/accountantController.mjs';
 import { authenticateToken } from "../middlewares/authenticationMiddleware..mjs";
 
 router.get('/monitor-manage-budget', authenticateToken, accountantController.monitorAndManageBudget);

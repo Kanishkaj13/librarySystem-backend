@@ -5,7 +5,7 @@ import connectDb from './config/db.mjs';
 
 import dotenv from 'dotenv';
 dotenv.config();
-import bookRoutes from "./routes/bookRoutes.mjs";
+
 import adminRoutes from "./routes/adminRoutes.mjs";
 import assistantLibrarianRoutes from "./routes/assistantLibrarianRoutes.mjs";
 import librarianRoutes from "./routes/librarianRoutes.mjs";
@@ -33,7 +33,7 @@ app.use('/api', limiter);
 const port = process.env.PORT || 300
 app.use(json());
 
-app.use("/api/books", bookRoutes);
+
 app.use('/admin',adminRoutes);
 app.use('/assistantLibrarian',assistantLibrarianRoutes);
 app.use('/librarian',librarianRoutes);

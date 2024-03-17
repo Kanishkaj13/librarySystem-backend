@@ -1,14 +1,7 @@
-// assistantLibrarianController.js
-import {assistCatalogingAndOrganizing as _assistCatalogingAndOrganizing,
-helpWithBookSearchAndCheckouts as _helpWithBookSearchAndCheckouts,
-assistInProcessingBorrowingsAndReturns as _assistInProcessingBorrowingsAndReturns, 
-ensureProperShelvingAndMaintainOrder as _ensureProperShelvingAndMaintainOrder,
-helpManageOverdueFinesAndFees as helpManageOverdueFinesAndFees,
-provideBookInformation as provideBookInformation} from '../services/assistantLibrarianService.mjs';
+import assistantLibrarianService from "../services/assistantLibrarianService.mjs";
+const assistantLibrarianController= {
 
-  
-
-const assistCatalogingAndOrganizing = async (req, res) => {
+ assistCatalogingAndOrganizing : async (req, res) => {
   try {
     const bookData = req.body;
     const result = await assistantLibrarianService.assistCatalogingAndOrganizing(bookData);
@@ -17,9 +10,9 @@ const assistCatalogingAndOrganizing = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-};
+},
 
-const helpWithBookSearchAndCheckouts = async (req, res) => {
+helpWithBookSearchAndCheckouts : async (req, res) => {
   try {
     const { userId, bookTitle } = req.body;
     const result = await assistantLibrarianService.helpWithBookSearchAndCheckouts(userId, bookTitle);
@@ -28,9 +21,9 @@ const helpWithBookSearchAndCheckouts = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-};
+},
 
-const assistInProcessingBorrowingsAndReturns = async (req, res) => {
+ assistInProcessingBorrowingsAndReturns :async (req, res) => {
   try {
     const { userId, bookId, action } = req.body;
     const result = await assistantLibrarianService.assistInProcessingBorrowingsAndReturns(userId, bookId, action);
@@ -39,9 +32,8 @@ const assistInProcessingBorrowingsAndReturns = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-};
-
-const ensureProperShelvingAndMaintainOrder = async (req, res) => {
+},
+ ensureProperShelvingAndMaintainOrder : async (req, res) => {
   try {
     const result = await assistantLibrarianService.ensureProperShelvingAndMaintainOrder();
     res.json(result);
@@ -49,9 +41,9 @@ const ensureProperShelvingAndMaintainOrder = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-};
+},
 
-const helpManageOverdueFinesAndFees = async (req, res) => {
+helpManageOverdueFinesAndFees : async (req, res) => {
   try {
     const { userId, amount } = req.body;
     const result = await assistantLibrarianService.helpManageOverdueFinesAndFees(userId, amount);
@@ -60,9 +52,9 @@ const helpManageOverdueFinesAndFees = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-};
+},
 
-const provideBookInformation = async (req, res) => {
+provideBookInformation : async (req, res) => {
   try {
     const { bookTitle } = req.body;
     const result = await assistantLibrarianService.provideBookInformation(bookTitle);
@@ -71,12 +63,9 @@ const provideBookInformation = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-};
-export{
-  assistCatalogingAndOrganizing,
-  helpWithBookSearchAndCheckouts,
-  assistInProcessingBorrowingsAndReturns,
-  ensureProperShelvingAndMaintainOrder,
-  helpManageOverdueFinesAndFees,
-  provideBookInformation,
-};
+}
+}
+
+export default assistantLibrarianController;
+
+   

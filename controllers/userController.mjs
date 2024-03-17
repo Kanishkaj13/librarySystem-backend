@@ -1,18 +1,7 @@
 // userController.js
-import { exploreLibraryCatalog as _exploreLibraryCatalog,
-  checkOutBook as _checkOutBook,
-  placeHoldOnBook as _placeHoldOnBook,
-  viewAccountStatus as _viewAccountsStatua,
-  offerFeedback as _offerFeedback,
-  updatePersonalInformation as _updatePersonalInformation,
-  followLibraryPoliciesAndGuidelines as _followLibraryPoliciesAndGuidelines,
-  payFines as _payFines,
-  giveFeedback as _giveFeedBack,
-  donateBook as _donateBook
-}from'../services/userService.mjs';
-
-
-const exploreLibraryCatalog = async (req, res) => {
+import userService from "../services/userService.mjs";
+const userController = {
+exploreLibraryCatalog : async (req, res) => {
   try {
     const result = await userService.exploreLibraryCatalog();
     res.json(result);
@@ -20,9 +9,9 @@ const exploreLibraryCatalog = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-};
+},
 
-const checkOutBook = async (req, res) => {
+ checkOutBook : async (req, res) => {
   try {
     const { userId, bookId } = req.body;
     const result = await userService.checkOutBook(userId, bookId);
@@ -31,9 +20,9 @@ const checkOutBook = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-};
+},
 
-const placeHoldOnBook = async (req, res) => {
+ placeHoldOnBook : async (req, res) => {
   try {
     const { userId, bookId } = req.body;
     const result = await userService.placeHoldOnBook(userId, bookId);
@@ -42,9 +31,9 @@ const placeHoldOnBook = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-};
+},
 
-const viewAccountStatus = async (req, res) => {
+ viewAccountStatus : async (req, res) => {
   try {
     const { userId } = req.params;
     const result = await userService.viewAccountStatus(userId);
@@ -53,9 +42,8 @@ const viewAccountStatus = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-};
-
-const offerFeedback = async (req, res) => {
+},
+ offerFeedback :async (req, res) => {
   try {
     const feedbackDetails = req.body;
     const result = await userService.offerFeedback(feedbackDetails);
@@ -64,9 +52,9 @@ const offerFeedback = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-};
+},
 
-const updatePersonalInformation = async (req, res) => {
+ updatePersonalInformation : async (req, res) => {
   try {
     const { userId, updatedData } = req.body;
     const result = await userService.updatePersonalInformation(userId, updatedData);
@@ -75,9 +63,9 @@ const updatePersonalInformation = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-};
+},
 
-const followLibraryPoliciesAndGuidelines = async (req, res) => {
+followLibraryPoliciesAndGuidelines : async (req, res) => {
   try {
     const result = await userService.followLibraryPoliciesAndGuidelines();
     res.json(result);
@@ -85,9 +73,9 @@ const followLibraryPoliciesAndGuidelines = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-};
+},
 
-const payFines = async (req, res) => {
+payFines : async (req, res) => {
   try {
     const { userId, amount } = req.body;
     const result = await userService.payFines(userId, amount);
@@ -96,9 +84,9 @@ const payFines = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-};
+},
 
-const giveFeedback = async (req, res) => {
+ giveFeedback : async (req, res) => {
   try {
     const feedbackDetails = req.body;
     const result = await userService.giveFeedback(feedbackDetails);
@@ -107,9 +95,9 @@ const giveFeedback = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-};
+},
 
-const donateBook = async (req, res) => {
+donateBook :async (req, res) => {
   try {
     const donationDetails = req.body;
     const result = await userService.donateBook(donationDetails);
@@ -118,17 +106,7 @@ const donateBook = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-};
+}
+}
 
-export {
-  exploreLibraryCatalog,
-  checkOutBook,
-  placeHoldOnBook,
-  viewAccountStatus,
-  offerFeedback,
-  updatePersonalInformation,
-  followLibraryPoliciesAndGuidelines,
-  payFines,
-  giveFeedback,
-  donateBook,
-};
+export default userController;

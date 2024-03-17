@@ -1,10 +1,8 @@
-
-import express from 'express';
-const router = express.Router();
+import { Router } from 'express';
 import adminController from '../controllers/adminController.mjs';
-import { authenticateToken } from "../middlewares/authenticationMiddleware..mjs";
+import { authenticateToken } from '../middlewares/authenticationMiddleware.mjs';
 
-
+const router = Router();
 
 router.post('/create-user', authenticateToken, adminController.createUser);
 router.post('/assign-roles-permissions', authenticateToken, adminController.assignRolesAndPermissions);
@@ -14,4 +12,6 @@ router.post('/track-borrowing-returns', authenticateToken, adminController.track
 router.post('/manage-overdue-fines', authenticateToken, adminController.manageOverdueFines);
 router.post('/generate-library-report', authenticateToken, adminController.generateLibraryReport);
 
-export default  router;
+export default router;
+
+

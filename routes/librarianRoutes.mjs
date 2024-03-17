@@ -1,7 +1,7 @@
 
 import  express from'express';
-const router = express.Router();
-const librarianController = require('../controllers/librarianController.mjs');
+import { Router } from 'express';
+import librarianController from '../controllers/librarianController.mjs';
 import { authenticateToken } from "../middlewares/authenticationMiddleware..mjs";
 
 

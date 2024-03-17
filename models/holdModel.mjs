@@ -10,4 +10,4 @@ const holdSchema = new mongoose.Schema({
 });
 
 const Hold = mongoose.model('Hold', holdSchema);
-export { Hold};
+export default  Hold;

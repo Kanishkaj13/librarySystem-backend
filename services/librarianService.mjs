@@ -1,8 +1,8 @@
 
-const Book = require('../models/bookModel.mjs');
-const Transaction = require('../models/transactionModel.mjs');
-const User = require('../models/userModel.mjs');
-const report = require('../models/reportModel.mjs');
+import Book from '../models/bookModel.mjs';
+import Transaction from '../models/transactionModel.mjs';
+import user from '../models/userModel.mjs';
+import report from '../models/reportModel.mjs';
 
 const librarianService = {
   addBook: async (bookData) => {
@@ -12,19 +12,19 @@ const librarianService = {
   },
 
   editBook: async (bookId, updatedData) => {
-    await Book.findByIdAndUpdate(bookId, { $set: updatedData });
+    await findByIdAndUpdate(bookId, { $set: updatedData });
     return { message: 'Book updated successfully' };
   },
 
   removeBook: async (bookId) => {
-    await Book.findByIdAndRemove(bookId);
+    await findByIdAndRemove(bookId);
     return { message: 'Book removed successfully' };
   },
 
   reviewHoldsAndRequests: async () => {
 
     try{
-        const holdsAndRequestsData = await Transaction.find({ action: 'hold' })
+        const holdsAndRequestsData = await find({ action: 'hold' })
           .populate('userId', 'username')
           .populate('bookId', 'title author');
         const formattedData = holdsAndRequestsData.map(transaction => ({
@@ -55,7 +55,7 @@ const librarianService = {
         };
         const newTransaction = new Transaction(transactionData);
         await newTransaction.save();
-        await Book.findByIdAndUpdate(bookId, { $set: { isAvailable: false } });
+        await findByIdAndUpdate(bookId, { $set: { isAvailable: false } });
   
         return { message: 'Checkout processed successfully' };
       } catch (error) {
@@ -73,14 +73,14 @@ const librarianService = {
     };
     const newTransaction = new Transaction(transactionData);
     await newTransaction.save();
-    await Book.findByIdAndUpdate(bookId, { $set: { isAvailable: true } });
+    await findByIdAndUpdate(bookId, { $set: { isAvailable: true } });
 
     return { message: 'Return processed successfully' };
   },
 
   manageFinesAndFees: async (userId, amount) => {
       try {
-        await User.findByIdAndUpdate(userId, { $inc: { fines: amount } });
+        await _findByIdAndUpdate(userId, { $inc: { fines: amount } });
         return { message: 'Fines and fees managed successfully' };
       } catch (error) {
         throw new Error(`Error managing fines and fees: ${error.message}`);
@@ -90,8 +90,8 @@ const librarianService = {
   generateReportsAndStatistics: async () => {
 
     try {
-      const totalTransactions = await Transaction.countDocuments();
-      const totalAvailableBooks = await Book.countDocuments({ isAvailable: true });
+      const totalTransactions = await _countDocuments();
+      const totalAvailableBooks = await countDocuments({ isAvailable: true });
         const reportsAndStatisticsData = {
         totalTransactions,
         totalAvailableBooks,
@@ -104,7 +104,7 @@ const librarianService = {
 manageUserAccounts: async (userId, updatedData) => {
 
     try {
-      await User.findByIdAndUpdate(userId, { $set: updatedData });
+      await _findByIdAndUpdate(userId, { $set: updatedData });
       return { message: 'User account managed successfully' };
     } catch (error) {
       throw new Error(`Error managing user accounts: ${error.message}`);
@@ -113,5 +113,5 @@ manageUserAccounts: async (userId, updatedData) => {
     
 };
 
-module.exports = librarianService;
+export default librarianService;
  

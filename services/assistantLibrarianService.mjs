@@ -1,7 +1,7 @@
 // assistantLibrarianService.js
-const Book = require('../models/bookModel.mjs');
-const Transaction = require('../models/transactionModel.mjs');
-const User = require('../models/userModel.mjs');
+import Book from '../models/bookModel.mjs';
+import Transaction from '../models/transactionModel.mjs';
+import  user from '../models/userModel.mjs';
 
 const assistantLibrarianService = {
   assistCatalogingAndOrganizing: async (bookData) => {
@@ -16,12 +16,12 @@ const assistantLibrarianService = {
 
   helpWithBookSearchAndCheckouts: async (userId, bookTitle) => {
     try {
-      const book = await Book.findOne({ title: bookTitle, isAvailable: true });
+      const book = await findOne({ title: bookTitle, isAvailable: true });
 
       if (book) {
         const newTransaction = new Transaction({ userId, bookId: book._id, action: 'checkout' });
         await newTransaction.save();
-        await Book.findByIdAndUpdate(book._id, { $set: { isAvailable: false } });
+        await findByIdAndUpdate(book._id, { $set: { isAvailable: false } });
 
         return { message: 'Book search and checkout successful' };
       } else {
@@ -37,7 +37,7 @@ const assistantLibrarianService = {
       const newTransaction = new Transaction({ userId, bookId, action });
       await newTransaction.save();
       if (action === 'return') {
-        await Book.findByIdAndUpdate(bookId, { $set: { isAvailable: true } });
+        await findByIdAndUpdate(bookId, { $set: { isAvailable: true } });
       }
 
       return { message: 'Book borrowing/return processed successfully' };
@@ -49,7 +49,7 @@ const assistantLibrarianService = {
   ensureProperShelvingAndMaintainOrder: async () => {
     try {
 
-      const sortedBooks = await Book.find().sort({ title: 1 });
+      const sortedBooks = await find().sort({ title: 1 });
       return { message: 'Shelving and order maintenance completed successfully' };
     } catch (error) {
       throw new Error(`Error ensuring proper shelving and maintaining order: ${error.message}`);
@@ -58,7 +58,7 @@ const assistantLibrarianService = {
 
   helpManageOverdueFinesAndFees: async (userId, amount) => {
     try {
-      await User.findByIdAndUpdate(userId, { $inc: { fines: amount } });
+      await _findByIdAndUpdate(userId, { $inc: { fines: amount } });
       return { message: 'Overdue fines and fees managed successfully' };
     } catch (error) {
       throw new Error(`Error helping manage overdue fines and fees: ${error.message}`);
@@ -67,7 +67,7 @@ const assistantLibrarianService = {
 
   provideBookInformation: async (bookTitle) => {
     try {
-      const book = await Book.findOne({ title: bookTitle });
+      const book = await findOne({ title: bookTitle });
 
       if (book) {
         return { bookInfo: book };
@@ -80,4 +80,4 @@ const assistantLibrarianService = {
   },
 };
 
-module.exports = assistantLibrarianService;
+export default assistantLibrarianService;

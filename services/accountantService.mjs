@@ -1,7 +1,7 @@
 
-const Transaction = require('../models/transactionModel.mjs');
-const Expense = require('../models/expenseModel');
-const Budget = require('../models/budgetModel.mjs');
+import Transaction from '../models/transactionModel.mjs';
+import Expense from '../models/expenseModel.mjs';
+import Budget from '../models/budgetModel.mjs';
 
 const accountantService = {
   trackAndRecordExpenses: async (expenseDetails) => {
@@ -63,4 +63,4 @@ const accountantService = {
 },
 };
 
-module.exports = accountantService;
+export default accountantService;

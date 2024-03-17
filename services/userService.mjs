@@ -1,14 +1,14 @@
 // userService.js
-const User = require('../models/userModel.mjs');
-const Book = require('../models/bookModel.mjs');
-const Hold = require('../models/holdModel.mjs'); 
-const Feedback = require('../models/feedbackModel.mjs'); 
-const Donation = require('../models/donationModel.mjs'); 
+import user from '../models/userModel.mjs';
+import book from '../models/bookModel.mjs';
+import Hold from '../models/holdModel.mjs'; 
+import Feedback from '../models/feedbackModel.mjs'; 
+import Donation from '../models/donationModel.mjs'; 
 
 const userService = {
    exploreLibraryCatalog: async () => {
       try {
-      const catalogData = await Book.find({}, 'title author quantity isAvailable');
+      const catalogData = await find({}, 'title author quantity isAvailable');
       return catalogData;
     } catch (error) {
       throw new Error(`Error exploring library catalog: ${error.message}`);
@@ -17,7 +17,7 @@ const userService = {
 
   checkOutBook: async (userId, bookId) => {
     try {
-    const existingBook = await Book.findById(bookId);
+    const existingBook = await _findById(bookId);
 
       if (!existingBook || !existingBook.isAvailable) {
         throw new Error('Book not available for checkout');
@@ -31,7 +31,7 @@ const userService = {
 
       const newTransaction = new Transaction(transactionData);
       await newTransaction.save();
-      await Book.findByIdAndUpdate(bookId, { $set: { isAvailable: false } });
+      await _findByIdAndUpdate(bookId, { $set: { isAvailable: false } });
 
       return { message: 'Checkout processed successfully' };
     } catch (error) {
@@ -62,7 +62,7 @@ const userService = {
   viewAccountStatus: async (userId) => {
 
     try {
-      const userData = await User.findById(userId);
+      const userData = await findById(userId);
 
       if (!userData) {
         throw new Error('User not found');
@@ -93,7 +93,7 @@ const userService = {
 
   updatePersonalInformation: async (userId, updatedData) => {
       try {
-      await User.findByIdAndUpdate(userId, { $set: updatedData });
+      await findByIdAndUpdate(userId, { $set: updatedData });
 
       return { message: 'Personal information updated successfully' };
     } catch (error) {
@@ -117,7 +117,7 @@ const userService = {
   payFines: async (userId, amount) => {
 
     try {
-      await User.findByIdAndUpdate(userId, { $inc: { fines: -amount } });
+      await findByIdAndUpdate(userId, { $inc: { fines: -amount } });
 
       return { message: 'Fines paid successfully' };
     } catch (error) {
@@ -155,7 +155,7 @@ try {
   },
 };
 
-module.exports = userService;
+export default userService;
 
 
 
