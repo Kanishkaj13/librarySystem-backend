@@ -1,7 +1,7 @@
-const User = require('../models/userModel.mjs');
-const Book = require('../models/bookModel.mjs');
-const Transaction = require('../models/transactionModel.mjs');
-const Report = require('../models/reportModel.mjs');
+import User from "../models/userModel.mjs";
+import Book from '../models/bookModel.mjs'
+import Transaction from '../models/transactionModel.mjs'
+import Report from '../models/reportModel.mjs'
 
 const adminService = {
   createUser: async (userData) => {
@@ -80,4 +80,4 @@ const adminService = {
   },
 };
 
-module.exports = adminService;
+export default adminService;

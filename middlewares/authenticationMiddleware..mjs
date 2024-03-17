@@ -1,7 +1,7 @@
 // authMiddleware.js
 import bcrypt from  "bcrypt";
 import jwt from "jsonwebtoken";
-import {User} from "../models/userModel.mjs";
+import User from "../models/userModel.mjs";
 
 const authenticateToken = async (req, res, next) => {
   try {
