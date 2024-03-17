@@ -1,8 +1,8 @@
 
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const accountantController = require('../controllers/accountantController.js');
-const { authenticateToken } = require('../middlewares/authenticationMiddleware.js');
+const accountantController = require('../controllers/accountantController.mjs');
+import { authenticateToken } from "../middlewares/authenticationMiddleware..mjs";
 
 router.get('/monitor-manage-budget', authenticateToken, accountantController.monitorAndManageBudget);
 router.post('/handle-fines', authenticateToken, accountantController.handleFines);
@@ -11,4 +11,4 @@ router.post('/interact-with-vendors', authenticateToken, accountantController.in
 router.get('/assist-in-planning-financial-allocations', authenticateToken, accountantController.assistInPlanningFinancialAllocations);
 router.get('/provide-financial-advice', authenticateToken, accountantController.provideFinancialAdvice);
 
-module.exports = router;
+export  default  router;

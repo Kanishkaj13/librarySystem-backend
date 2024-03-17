@@ -1,5 +1,16 @@
 // userController.js
-const userService = require('../services/userService');
+import { exploreLibraryCatalog as _exploreLibraryCatalog,
+  checkOutBook as _checkOutBook,
+  placeHoldOnBook as _placeHoldOnBook,
+  viewAccountStatus as _viewAccountsStatua,
+  offerFeedback as _offerFeedback,
+  updatePersonalInformation as _updatePersonalInformation,
+  followLibraryPoliciesAndGuidelines as _followLibraryPoliciesAndGuidelines,
+  payFines as _payFines,
+  giveFeedback as _giveFeedBack,
+  donateBook as _donateBook
+}from'../services/userService.mjs';
+
 
 const exploreLibraryCatalog = async (req, res) => {
   try {
@@ -109,7 +120,7 @@ const donateBook = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   exploreLibraryCatalog,
   checkOutBook,
   placeHoldOnBook,

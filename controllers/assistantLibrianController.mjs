@@ -1,5 +1,12 @@
 // assistantLibrarianController.js
-const assistantLibrarianService = require('../services/assistantLibrarianService');
+import {assistCatalogingAndOrganizing as _assistCatalogingAndOrganizing,
+helpWithBookSearchAndCheckouts as _helpWithBookSearchAndCheckouts,
+assistInProcessingBorrowingsAndReturns as _assistInProcessingBorrowingsAndReturns, 
+ensureProperShelvingAndMaintainOrder as _ensureProperShelvingAndMaintainOrder,
+helpManageOverdueFinesAndFees as helpManageOverdueFinesAndFees,
+provideBookInformation as provideBookInformation} from '../services/assistantLibrarianService.mjs';
+
+  
 
 const assistCatalogingAndOrganizing = async (req, res) => {
   try {
@@ -65,8 +72,7 @@ const provideBookInformation = async (req, res) => {
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };
-
-module.exports = {
+export{
   assistCatalogingAndOrganizing,
   helpWithBookSearchAndCheckouts,
   assistInProcessingBorrowingsAndReturns,

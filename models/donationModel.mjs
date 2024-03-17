@@ -1,5 +1,6 @@
 // donationModel.js
-const mongoose = require('mongoose');
+
+import mongoose from'mongoose';
 
 const donationSchema = new mongoose.Schema({
   donorName: { type: String, required: true },
@@ -9,4 +10,4 @@ const donationSchema = new mongoose.Schema({
 
 const Donation = mongoose.model('Donation', donationSchema);
 
-module.exports = Donation;
+export {Donation};

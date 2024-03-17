@@ -1,5 +1,6 @@
 // feedbackModel.js
-const mongoose = require('mongoose');
+
+import mongoose from'mongoose';
 
 const feedbackSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // Assuming there's a User model
@@ -9,4 +10,4 @@ const feedbackSchema = new mongoose.Schema({
 
 const Feedback = mongoose.model('Feedback', feedbackSchema);
 
-module.exports = Feedback;
+export {Feedback};

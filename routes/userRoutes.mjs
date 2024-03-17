@@ -1,8 +1,9 @@
 
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const userController = require('../controllers/userController.js');
-const { authenticateToken } = require('../middlewares/authenticationMiddleware.js');
+const userController = require('../controllers/userController.mjs');
+import { authenticateToken } from "../middlewares/authenticationMiddleware..mjs";
+
 
 router.get('/explore-library-catalog', authenticateToken, userController.exploreLibraryCatalog);
 router.post('/check-out-book', authenticateToken, userController.checkOutBook);
@@ -15,4 +16,4 @@ router.post('/pay-fines', authenticateToken, userController.payFines);
 router.post('/give-feedback', authenticateToken, userController.giveFeedback);
 router.post('/donate-book', authenticateToken, userController.donateBook);
 
-module.exports = router;
+export default router;

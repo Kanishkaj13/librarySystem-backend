@@ -1,5 +1,7 @@
-const asyncHandler = require ("express-async-Handler");
-const book = require ("../models/bookModel");
+import asyncHandler from "express-async-Handler";
+
+import {getAllBooks as _getAllBooks,postBook as _postBook,getBook as _getBook,updateBook as _updateBook,deleteBook as _deleteBook} from '../services/bookService.mjs';
+
 
 const getAllBooks =asyncHandler(async (req,res) =>{
 
@@ -34,4 +36,4 @@ const deleteBook =asyncHandler(async(req,res) =>{
     res.status(200).json({message: `delete the book for ${req.params.id}`});
 });
 
-module.exports = {getAllBooks,postBook,getBook,updateBook,deleteBook};
+export {getAllBooks,postBook,getBook,updateBook,deleteBook};

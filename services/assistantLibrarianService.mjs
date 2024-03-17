@@ -1,7 +1,7 @@
 // assistantLibrarianService.js
-const Book = require('../models/bookModel');
-const Transaction = require('../models/transactionModel');
-const User = require('../models/userModel');
+const Book = require('../models/bookModel.mjs');
+const Transaction = require('../models/transactionModel.mjs');
+const User = require('../models/userModel.mjs');
 
 const assistantLibrarianService = {
   assistCatalogingAndOrganizing: async (bookData) => {

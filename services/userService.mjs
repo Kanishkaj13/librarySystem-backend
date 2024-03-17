@@ -1,9 +1,9 @@
 // userService.js
-const User = require('../models/userModel');
-const Book = require('../models/bookModel');
-const Hold = require('../models/holdModel'); 
-const Feedback = require('../models/feedbackModel'); 
-const Donation = require('../models/donationModel'); 
+const User = require('../models/userModel.mjs');
+const Book = require('../models/bookModel.mjs');
+const Hold = require('../models/holdModel.mjs'); 
+const Feedback = require('../models/feedbackModel.mjs'); 
+const Donation = require('../models/donationModel.mjs'); 
 
 const userService = {
    exploreLibraryCatalog: async () => {

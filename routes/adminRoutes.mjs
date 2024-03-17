@@ -1,8 +1,10 @@
 
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const adminController = require('../controllers/adminController.js');
-const { authenticateToken } = require('../middlewares/authenticationMiddleware.js');
+import adminController from '../controllers/adminController.mjs';
+import { authenticateToken } from "../middlewares/authenticationMiddleware..mjs";
+
+
 
 router.post('/create-user', authenticateToken, adminController.createUser);
 router.post('/assign-roles-permissions', authenticateToken, adminController.assignRolesAndPermissions);
@@ -12,4 +14,4 @@ router.post('/track-borrowing-returns', authenticateToken, adminController.track
 router.post('/manage-overdue-fines', authenticateToken, adminController.manageOverdueFines);
 router.post('/generate-library-report', authenticateToken, adminController.generateLibraryReport);
 
-module.exports = router;
+export default  router;

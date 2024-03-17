@@ -1,5 +1,18 @@
-// adminController.js
-const adminService = require('../services/adminService');
+// adminController.mjs
+
+import {
+  createUser as _createUser,
+  assignRolesAndPermissions as _assignRolesAndPermissions,
+  addOrUpdateBook as _addOrUpdateBook,
+  registerMemberIssue as _registerMemberIssue,
+  trackBorrowingAndReturns as _trackBorrowingAndReturns,
+  manageOverdueFines as _manageOverdueFines,
+  generateLibraryReport as _generateLibraryReport
+} from '../services/adminService.mjs';
+
+  
+
+  
 
 const createUser = async (req, res) => {
   try {
@@ -44,7 +57,6 @@ const registerMemberIssue = async (req, res) => {
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };
-
 const trackBorrowingAndReturns = async (req, res) => {
   try {
     const { userId, bookId, action } = req.body;
@@ -77,7 +89,7 @@ const generateLibraryReport = async (req, res) => {
   }
 };
 
-module.exports = {
+export  {
   createUser,
   assignRolesAndPermissions,
   addOrUpdateBook,

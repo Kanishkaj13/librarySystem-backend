@@ -1,8 +1,9 @@
 
-const express = require('express');
+import  express from'express';
 const router = express.Router();
-const librarianController = require('../controllers/librarianController.js');
-const { authenticateToken } = require('../middlewares/authenticationMiddleware.js');
+const librarianController = require('../controllers/librarianController.mjs');
+import { authenticateToken } from "../middlewares/authenticationMiddleware..mjs";
+
 
 router.post('/add-book', authenticateToken, librarianController.addBook);
 router.put('/edit-book/:bookId', authenticateToken, librarianController.editBook);
@@ -14,4 +15,4 @@ router.post('/manage-fines-fees', authenticateToken, librarianController.manageF
 router.get('/generate-reports-statistics', authenticateToken, librarianController.generateReportsAndStatistics);
 router.put('/manage-user-accounts/:userId', authenticateToken, librarianController.manageUserAccounts);
 
-module.exports = router;
+export default router;

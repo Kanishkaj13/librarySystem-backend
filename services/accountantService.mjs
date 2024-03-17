@@ -1,7 +1,7 @@
 
-const Transaction = require('../models/transactionModel');
+const Transaction = require('../models/transactionModel.mjs');
 const Expense = require('../models/expenseModel');
-const Budget = require('../models/budgetModel');
+const Budget = require('../models/budgetModel.mjs');
 
 const accountantService = {
   trackAndRecordExpenses: async (expenseDetails) => {

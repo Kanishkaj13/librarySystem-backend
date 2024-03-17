@@ -1,5 +1,14 @@
 // librarianController.js
-const librarianService = require('../services/librarianService');
+import{ addBook as _addBook,
+  editBook as _edtBook,
+  removeBook as _removeBook,
+  reviewHoldsAndRequests as _reviewHoldsAndRequests,
+  processCheckout as _processCheckout,
+  processReturn as _processReturn,
+  manageFinesAndFees as _manageFinesAndFees,
+  generateReportsAndStatistics as _generateReportsAndStatistics,
+  manageUserAccounts as _manageUserAccounts
+}from'../services/librarianService.mjs';
 
 const addBook = async (req, res) => {
   try {
@@ -100,7 +109,7 @@ const manageUserAccounts = async (req, res) => {
   }
 };
 
-module.exports = {
+export  {
   addBook,
   editBook,
   removeBook,

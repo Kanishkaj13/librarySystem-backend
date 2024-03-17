@@ -1,5 +1,5 @@
 // accountantController.js
-import { monitorAndManageBudget as _monitorAndManageBudget, handleFines as _handleFines, trackAndRecordExpenses as _trackAndRecordExpenses, interactWithVendors as _interactWithVendors, assistInPlanningFinancialAllocations as _assistInPlanningFinancialAllocations, provideFinancialAdvice as _provideFinancialAdvice } from '../services/accountantService';
+import { monitorAndManageBudget as _monitorAndManageBudget, handleFines as _handleFines, trackAndRecordExpenses as _trackAndRecordExpenses, interactWithVendors as _interactWithVendors, assistInPlanningFinancialAllocations as _assistInPlanningFinancialAllocations, provideFinancialAdvice as _provideFinancialAdvice } from '../services/accountantService.mjs';
 
 const monitorAndManageBudget = async (req, res) => {
   try {
@@ -64,7 +64,7 @@ const provideFinancialAdvice = async (req, res) => {
   }
 };
 
-export default {
+export  {
   monitorAndManageBudget,
   handleFines,
   trackAndRecordExpenses,

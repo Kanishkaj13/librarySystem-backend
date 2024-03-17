@@ -1,5 +1,6 @@
 
-const mongoose = require('mongoose');
+
+import mongoose from'mongoose';
 
 const transactionSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -10,5 +11,4 @@ const transactionSchema = new mongoose.Schema({
 });
 
 const Transaction = mongoose.model('Transaction', transactionSchema);
-
-module.exports = Transaction;
+export {Transaction};
