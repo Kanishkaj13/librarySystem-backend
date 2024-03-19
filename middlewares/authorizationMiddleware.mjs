@@ -1,22 +1,25 @@
-// authorizationMiddleware.js
-const authorizeRoles = async(req,res,next) => {
+
+import jwt from "jsonwebtoken";
+
+const authorizeRoles = async (req, res, next) => {
   let token;
-  let authHeader = req.headers.Authorization || req.headers.authorization;
-  if (authHeader && authHeader.startsWith("Bearer")) {
+  const authHeader = req.headers.authorization;
+
+  if (authHeader && authHeader.toLowerCase().startsWith("bearer")) {
     token = authHeader.split(" ")[1];
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECERT, (err, decoded) => {
-      if (err) {
-        res.status(401);
-        throw new Error("User is not authorized");
+    try {
+      const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+      if (!decoded || !decoded.user) {
+        res.status(401).json({ error: "Invalid token" });
+        return;
       }
       req.user = decoded.user;
       next();
-    });
-
-    if (!token) {
-      res.status(401);
-      throw new Error("User is not authorized or token is missing");
+    } catch (error) {
+      res.status(401).json({ error: "Token verification failed" });
     }
+  } else {
+    res.status(401).json({ error: "Authorization header is missing or invalid" });
   }
 };
 

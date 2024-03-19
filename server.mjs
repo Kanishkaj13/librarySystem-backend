@@ -1,8 +1,6 @@
 import express, { json } from "express";
 import rateLimit from 'express-rate-limit';
-
 import connectDb from './config/db.mjs';
-
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -14,9 +12,6 @@ import userRoutes from "./routes/userRoutes.mjs";
 
 
 import errorHandler from "./middlewares/errorHandler.mjs";
-
-
-
 connectDb();
 const app = express();
 
@@ -39,11 +34,7 @@ app.use('/assistantLibrarian',assistantLibrarianRoutes);
 app.use('/librarian',librarianRoutes);
 app.use('/accountant',accountantRoutes);
 app.use('/user',userRoutes);
-
-
-
 app.use(errorHandler);
-
 
 
 app.listen(port, () => {
