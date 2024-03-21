@@ -2,6 +2,16 @@
 import  librarianService from "../services/librarianService.mjs";
 
 const librarianController={
+createUser: async (req, res) => {
+    try {
+      const userData = req.body;
+      await librarianService.createUser(userData);
+      res.json({ message: 'User created successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  },
 addBook :async (req, res) => {
   try {
     const bookData = req.body;

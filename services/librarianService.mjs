@@ -5,6 +5,21 @@ import user from '../models/userModel.mjs';
 import report from '../models/reportModel.mjs';
 
 const librarianService = {
+
+  createUser: async (userData) => {
+    try {
+      const existingUser = await User.findOne({ username: userData.username });
+      if (existingUser) {
+        throw new Error('Username already exists');
+      }
+      const newUser = new User(userData);
+      await newUser.save();
+
+      return { message: 'User created successfully' };
+    } catch (error) {
+      throw new Error(`Error creating user: ${error.message}`);
+    }
+  },
   addBook: async (bookData) => {
     const newBook = new Book(bookData);
     await newBook.save();

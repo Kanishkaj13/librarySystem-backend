@@ -5,7 +5,7 @@ const router = Router();
 import librarianController from '../controllers/librarianController.mjs';
 import { authenticateToken } from "../middlewares/authenticationMiddleware.mjs";
 
-
+router.post('/create-user', authenticateToken, librarianController.createUser);
 router.post('/add-book', authenticateToken, librarianController.addBook);
 router.put('/edit-book/:bookId', authenticateToken, librarianController.editBook);
 router.delete('/remove-book/:bookId', authenticateToken, librarianController.removeBook);

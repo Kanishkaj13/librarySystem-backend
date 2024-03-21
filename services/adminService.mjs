@@ -4,6 +4,19 @@ import Transaction from '../models/transactionModel.mjs'
 import Report from '../models/reportModel.mjs'
 
 const adminService = {
+
+
+  getAllUsers: async () => {
+    try {
+      // Fetch all users from the database
+      const users = await User.find();
+      return users;
+    } catch (error) {
+      // Handle errors
+      console.error(error);
+      throw new Error('Error fetching users');
+    }
+  },
   createUser: async (userData) => {
     try {
       const existingUser = await User.findOne({ username: userData.username });

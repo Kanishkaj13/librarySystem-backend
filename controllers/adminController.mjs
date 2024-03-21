@@ -6,7 +6,20 @@ import adminService from "../services/adminService.mjs";
 
 const adminController = {
 
-   createUser: async (req, res) => {
+  getAllUsers: async (req, res) => {
+    try {
+      // Fetch all users from the database
+      const users = await User.find();
+
+      // Respond with the list of users
+      res.status(200).json(users);
+    } catch (error) {
+      // Handle errors
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  },
+createUser: async (req, res) => {
     try {
       const userData = req.body;
       await adminService.createUser(userData);

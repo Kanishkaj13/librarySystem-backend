@@ -17,7 +17,7 @@ export const authenticateToken = async (req, res, next) => {
       res.status(401).json({ error: "Invalid username or password" });
       return;
     }
-    const accessToken = jwt.sign({ userId: user._id,userNmae:user.name, roles: user.roles }, process.env.ACCESS_TOKEN_SECERT,
+    const accessToken = jwt.sign({ userId: user._id,userName:user.name, roles: user.roles }, process.env.ACCESS_TOKEN_SECERT,
       { expiresIn: "15m" }
     );
     res.status(200).json({accessToken});
