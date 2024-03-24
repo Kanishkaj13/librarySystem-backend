@@ -2,17 +2,14 @@ import User from "../models/userModel.mjs";
 import Book from '../models/bookModel.mjs'
 import Transaction from '../models/transactionModel.mjs'
 import Report from '../models/reportModel.mjs'
+import bcrypt from 'bcrypt'
 
 const adminService = {
-
-
-  getAllUsers: async () => {
+      getAllUsers: async () => {
     try {
-      // Fetch all users from the database
       const users = await User.find();
       return users;
     } catch (error) {
-      // Handle errors
       console.error(error);
       throw new Error('Error fetching users');
     }
@@ -27,10 +24,30 @@ const adminService = {
       await newUser.save();
 
       return { message: 'User created successfully' };
+
     } catch (error) {
       throw new Error(`Error creating user: ${error.message}`);
     }
+  
+  
   },
+
+  registerUser: async (username, email, password, roles) => {
+    const userAvailable = await User.findOne({ email });
+    if (userAvailable) {
+      throw new Error("User already registered");
+    }
+    //Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await User.create({
+      username,
+      email,
+      password: hashedPassword,
+      roles
+    });
+    return user;
+  },
+
 
   assignRolesAndPermissions: async (userId, roles, permissions) => {
     const user = await User.findById(userId);
@@ -56,8 +73,9 @@ const adminService = {
     }
   },
 
-  registerMemberIssue: async (userId, issueDetails) => {
-    await User.findByIdAndUpdate(userId, { $push: { issues: issueDetails } });
+  registerMemberIssue: async (issueDetails) => {
+    await User.findByIdAndUpdate(  { _id: userId },
+      { $set: { issues: [issueDetails] } }, {upsert: true});
     return { message: 'Member issue registered successfully' };
   },
 

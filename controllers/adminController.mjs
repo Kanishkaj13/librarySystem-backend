@@ -1,20 +1,13 @@
 // adminController.mjs
-
+import User from "../models/userModel.mjs";
 import adminService from "../services/adminService.mjs";
 
-
-
 const adminController = {
-
-  getAllUsers: async (req, res) => {
+    getAllUsers: async (req, res) => {
     try {
-      // Fetch all users from the database
       const users = await User.find();
-
-      // Respond with the list of users
       res.status(200).json(users);
     } catch (error) {
-      // Handle errors
       console.error(error);
       res.status(500).json({ message: 'Internal Server Error' });
     }
@@ -52,14 +45,18 @@ createUser: async (req, res) => {
     }
   },
 
-   registerMemberIssue: async (req, res) => {
-    try {
-      const { userId, issueDetails } = req.body;
-      await adminService.registerMemberIssue(userId, issueDetails);
-      res.json({ message: 'Member issue registered successfully' });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Internal Server Error' });
+  registerUser:  async (req, res) => {
+    const { username, email, password, roles } = req.body;
+    if (!username || !email || !password) {
+      res.status(400);
+      throw new Error("All fields are mandatory");
+    }
+    const user = await adminService.registerUser( username, email, password, roles );
+    if (user) {
+      res.status(201).json({ _id: user._id, email: user.email });
+    } else {
+      res.status(400);
+      throw new Error("User data is not valid");
     }
   },
 

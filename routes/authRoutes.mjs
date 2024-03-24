@@ -1,9 +1,9 @@
 import express from 'express';
-import authenticateToken from '../middlewares/authenticationMiddleware.mjs';
+import {authenticateToken}from '../middlewares/authenticationMiddleware.mjs';
 const router = express.Router();
+import adminController from '../controllers/adminController.mjs';
 
-// Login route
 router.post('/login', authenticateToken);
+router.post('/register', adminController.registerUser);
 
 export default router;
-

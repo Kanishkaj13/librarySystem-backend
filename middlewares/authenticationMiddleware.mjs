@@ -13,13 +13,17 @@ export const authenticateToken = async (req, res, next) => {
       return;
     }
     const validPassword = await bcrypt.compare(password,user.password);
+    console.log(validPassword);
     if (!validPassword) {
       res.status(401).json({ error: "Invalid username or password" });
       return;
     }
-    const accessToken = jwt.sign({ userId: user._id,userName:user.name, roles: user.roles }, process.env.ACCESS_TOKEN_SECERT,
+    console.log(user.username);
+    console.log(user.roles);
+    const accessToken = jwt.sign({userName:user.username, roles: user.roles }, process.env.ACCESS_TOKEN_SECERET,
       { expiresIn: "15m" }
     );
+    console.log(accessToken);
     res.status(200).json({accessToken});
     
     }
@@ -27,5 +31,4 @@ export const authenticateToken = async (req, res, next) => {
   res.status(401).json({ message: 'Invalid credentials' });
 }
 };
-
 export default authenticateToken;
