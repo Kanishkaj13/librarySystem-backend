@@ -1,6 +1,6 @@
 import bookService from '../services/bookService.mjs';
 
-const getAllBooks = async (req, res) => {
+async function getAllBooks(req, res) {
   try {
     const books = await bookService.getAllBooks();
     res.status(200).json(books);
@@ -9,7 +9,7 @@ const getAllBooks = async (req, res) => {
   }
 };
 
-const postBook = async (req, res) => {
+async function postBook(req, res) {
   try {
     const newBook = await bookService.postBook(req.body);
     res.status(201).json(newBook);
@@ -18,7 +18,7 @@ const postBook = async (req, res) => {
   }
 };
 
-const getBook = async (req, res) => {
+async function getBook(req, res) {
   try {
     const book = await bookService.getBook(req.params.id);
     res.status(200).json(book);
@@ -27,7 +27,7 @@ const getBook = async (req, res) => {
   }
 };
 
-const updateBook = async (req, res) => {
+async function updateBook(req, res) {
   try {
     const updatedBook = await bookService.updateBook(req.params.id, req.body);
     res.status(200).json(updatedBook);
@@ -36,7 +36,7 @@ const updateBook = async (req, res) => {
   }
 };
 
-const deleteBook = async (req, res) => {
+async function deleteBook(req, res) {
   try {
     const deletedBook = await bookService.deleteBook(req.params.id);
     res.status(200).json(deletedBook);
@@ -45,4 +45,10 @@ const deleteBook = async (req, res) => {
   }
 };
 
-export default bookController;
+export {
+  getAllBooks,
+  getBook,
+  postBook,
+  updateBook,
+  deleteBook,
+};
