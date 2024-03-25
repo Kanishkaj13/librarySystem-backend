@@ -120,5 +120,7 @@ export {
   processCheckout,
   processReturn,
   removeBook,
-  editBook
+  editBook,
+  reviewHoldsAndRequests,
+  generateReportsAndStatistics
 };

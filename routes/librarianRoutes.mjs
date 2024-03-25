@@ -1,19 +1,28 @@
-
-
 import { Router } from 'express';
-const router = Router();
-import librarianController from '../controllers/librarianController.mjs';
+import {
+    createUser,
+    addBook,
+    manageFinesAndFees,
+    manageUserAccounts,
+    processCheckout,
+    processReturn,
+    removeBook,
+    editBook,
+    reviewHoldsAndRequests,
+    generateReportsAndStatistics
+} from '../controllers/librarianController.mjs';
 import { authenticateToken } from "../middlewares/authenticationMiddleware.mjs";
+const router = Router();
 
-router.post('/create-user', authenticateToken, librarianController.createUser);
-router.post('/add-book', authenticateToken, librarianController.addBook);
-router.put('/edit-book/:bookId', authenticateToken, librarianController.editBook);
-router.delete('/remove-book/:bookId', authenticateToken, librarianController.removeBook);
-router.get('/review-holds-requests', authenticateToken, librarianController.reviewHoldsAndRequests);
-router.post('/process-checkout', authenticateToken, librarianController.processCheckout);
-router.post('/process-return', authenticateToken, librarianController.processReturn);
-router.post('/manage-fines-fees', authenticateToken, librarianController.manageFinesAndFees);
-router.get('/generate-reports-statistics', authenticateToken, librarianController.generateReportsAndStatistics);
-router.put('/manage-user-accounts/:userId', authenticateToken, librarianController.manageUserAccounts);
+router.post('/create-user', authenticateToken, createUser);
+router.post('/add-book', authenticateToken, addBook);
+router.put('/edit-book/:bookId', authenticateToken, editBook);
+router.delete('/remove-book/:bookId', authenticateToken, removeBook);
+router.get('/review-holds-requests', authenticateToken, reviewHoldsAndRequests);
+router.post('/process-checkout', authenticateToken, processCheckout);
+router.post('/process-return', authenticateToken, processReturn);
+router.post('/manage-fines-fees', authenticateToken, manageFinesAndFees);
+router.get('/generate-reports-statistics', authenticateToken, generateReportsAndStatistics);
+router.put('/manage-user-accounts/:userId', authenticateToken, manageUserAccounts);
 
 export default router;
