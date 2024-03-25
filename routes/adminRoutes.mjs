@@ -1,16 +1,24 @@
-import {Router} from 'express';
-const  router = Router();
-import adminController from '../controllers/adminController.mjs';
-import  {authenticateToken}from "../middlewares/authenticationMiddleware.mjs";
+import { Router } from 'express';
+import {
+    getAllUsers,
+    generateLibraryReport,
+    manageOverdueFines,
+    trackBorrowingAndReturns,
+    addOrUpdateBook,
+    registerUser,
+    assignRolesAndPermissions,
+    createUser,
+} from '../controllers/adminController.mjs';
+import authenticateToken from "../middlewares/authenticationMiddleware.mjs";
+const router = Router();
 
-router.post('/create-user', authenticateToken, adminController.createUser);
-router.post('/assign-roles-permissions', authenticateToken, adminController.assignRolesAndPermissions);
-router.post('/add-update-book', authenticateToken, adminController.addOrUpdateBook);
-router.post('/register-member-issue', authenticateToken, adminController.registerUser);
-router.post('/track-borrowing-returns', authenticateToken, adminController.trackBorrowingAndReturns);
-router.post('/manage-overdue-fines', authenticateToken, adminController.manageOverdueFines);
-router.post('/generate-library-report', authenticateToken, adminController.generateLibraryReport);
+router.post('/create-user', authenticateToken, createUser);
+router.post('/get-all-user', authenticateToken, createUser);
+router.post('/assign-roles-permissions', authenticateToken, assignRolesAndPermissions);
+router.post('/add-update-book', authenticateToken, addOrUpdateBook);
+router.post('/register-member-issue', authenticateToken, registerUser);
+router.post('/track-borrowing-returns', authenticateToken, trackBorrowingAndReturns);
+router.post('/manage-overdue-fines', authenticateToken, manageOverdueFines);
+router.post('/generate-library-report', authenticateToken, generateLibraryReport);
 
-
-export default  router;
-
+export default router;

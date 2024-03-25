@@ -1,5 +1,3 @@
-// holdModel.js
-
 import mongoose from'mongoose';
 
 const holdSchema = new mongoose.Schema({
