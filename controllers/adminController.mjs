@@ -4,14 +4,17 @@ import adminService from "../services/adminService.mjs";
 
 const adminController = {
     getAllUsers: async (req, res) => {
-    try {
-      const users = await User.find();
+  
+      const users = await adminService.getAllUsers();
+      if(users){
       res.status(200).json(users);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Internal Server Error' });
-    }
-  },
+      }else {
+        res.status(400);
+        throw new error("error in fetching all users");
+      }
+    },
+
+
 createUser: async (req, res) => {
     try {
       const userData = req.body;
@@ -24,13 +27,19 @@ createUser: async (req, res) => {
   },
 
    assignRolesAndPermissions: async (req, res) => {
-    try {
+  
       const { userId, roles, permissions } = req.body;
-      await adminService.assignRolesAndPermissions(userId, roles, permissions);
-      res.json({ message: 'Roles and permissions assigned successfully' });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Internal Server Error' });
+      if(!userId||!roles||!permissions){
+        res.status(400);
+        throw new error("all fields are mandotory")
+      }
+      const user=  await adminService.assignRolesAndPermissions(userId, roles, permissions);
+       if(username) {
+      res.status(200).json({_id:user_.id,roles:user.roles });
+    } else {
+    
+      res.status(400);
+      throw new error("permissions is not assigned properly")
     }
   },
 

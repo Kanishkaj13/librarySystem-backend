@@ -5,14 +5,16 @@ import Report from '../models/reportModel.mjs'
 import bcrypt from 'bcrypt'
 
 const adminService = {
-      getAllUsers: async () => {
+  getAllUsers: async () => {
     try {
       const users = await User.find();
       return users;
     } catch (error) {
+    
       console.error(error);
       throw new Error('Error fetching users');
     }
+  
   },
   createUser: async (userData) => {
     try {

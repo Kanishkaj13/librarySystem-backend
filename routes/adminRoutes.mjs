@@ -10,7 +10,7 @@ router.post('/register-member-issue', authenticateToken, adminController.registe
 router.post('/track-borrowing-returns', authenticateToken, adminController.trackBorrowingAndReturns);
 router.post('/manage-overdue-fines', authenticateToken, adminController.manageOverdueFines);
 router.post('/generate-library-report', authenticateToken, adminController.generateLibraryReport);
-router.get('/users', authenticateToken, adminController.getAllUsers);
+
 
 export default  router;
 
