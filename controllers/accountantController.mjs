@@ -1,8 +1,6 @@
-
 import accountantService from "../services/accountantService.mjs";
 
-const accountantController = {
- monitorAndManageBudget : async (req, res) => {
+async function monitorAndManageBudget(req, res) {
   try {
     const result = await _monitorAndManageBudget();
     res.json(result);
@@ -10,9 +8,9 @@ const accountantController = {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-},
+}
 
- handleFines :async (req, res) => {
+async function handleFines(req, res) {
   try {
     const { userId, amount } = req.body;
     const result = await _handleFines(userId, amount);
@@ -21,9 +19,9 @@ const accountantController = {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-},
+}
 
- trackAndRecordExpenses :async (req, res) => {
+async function trackAndRecordExpenses(req, res) {
   try {
     const expenseDetails = req.body;
     const result = await _trackAndRecordExpenses(expenseDetails);
@@ -32,9 +30,9 @@ const accountantController = {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-},
+}
 
- interactWithVendors :async (req, res) => {
+async function interactWithVendors(req, res) {
   try {
     const vendorDetails = req.body;
     const result = await _interactWithVendors(vendorDetails);
@@ -43,9 +41,9 @@ const accountantController = {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-},
+}
 
- assistInPlanningFinancialAllocations : async (req, res) => {
+async function assistInPlanningFinancialAllocations(req, res) {
   try {
     const result = await _assistInPlanningFinancialAllocations();
     res.json(result);
@@ -53,8 +51,9 @@ const accountantController = {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-}, 
-provideFinancialAdvice : async (req,res)=>{
+}
+
+async function provideFinancialAdvice(req,res) {
   try {
     const result = await _provideFinancialAdvice();
     res.json(result);
@@ -63,6 +62,12 @@ provideFinancialAdvice : async (req,res)=>{
     res.status(500).json({ message: 'Internal Server Error' });
   }
 }
-}
 
-export default accountantController;
+export {
+  monitorAndManageBudget,
+  handleFines,
+  trackAndRecordExpenses,
+  interactWithVendors,
+  assistInPlanningFinancialAllocations,
+  provideFinancialAdvice
+};

@@ -1,7 +1,7 @@
 // userController.js
 import userService from "../services/userService.mjs";
-const userController = {
-exploreLibraryCatalog : async (req, res) => {
+
+async function exploreLibraryCatalog(req, res) {
   try {
     const result = await userService.exploreLibraryCatalog();
     res.json(result);
@@ -9,9 +9,9 @@ exploreLibraryCatalog : async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-},
+}
 
- checkOutBook : async (req, res) => {
+async function checkOutBook(req, res) {
   try {
     const { userId, bookId } = req.body;
     const result = await userService.checkOutBook(userId, bookId);
@@ -20,9 +20,9 @@ exploreLibraryCatalog : async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-},
+}
 
- placeHoldOnBook : async (req, res) => {
+async function placeHoldOnBook(req, res) {
   try {
     const { userId, bookId } = req.body;
     const result = await userService.placeHoldOnBook(userId, bookId);
@@ -31,9 +31,9 @@ exploreLibraryCatalog : async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-},
+}
 
- viewAccountStatus : async (req, res) => {
+async function viewAccountStatus(req, res) {
   try {
     const { userId } = req.params;
     const result = await userService.viewAccountStatus(userId);
@@ -42,8 +42,9 @@ exploreLibraryCatalog : async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-},
- offerFeedback :async (req, res) => {
+}
+
+async function offerFeedback(req, res) {
   try {
     const feedbackDetails = req.body;
     const result = await userService.offerFeedback(feedbackDetails);
@@ -52,9 +53,9 @@ exploreLibraryCatalog : async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-},
+}
 
- updatePersonalInformation : async (req, res) => {
+async function updatePersonalInformation(req, res) {
   try {
     const { userId, updatedData } = req.body;
     const result = await userService.updatePersonalInformation(userId, updatedData);
@@ -63,9 +64,9 @@ exploreLibraryCatalog : async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-},
+}
 
-followLibraryPoliciesAndGuidelines : async (req, res) => {
+async function followLibraryPoliciesAndGuidelines(req, res) {
   try {
     const result = await userService.followLibraryPoliciesAndGuidelines();
     res.json(result);
@@ -73,9 +74,9 @@ followLibraryPoliciesAndGuidelines : async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-},
+}
 
-payFines : async (req, res) => {
+async function functionpayFines(req, res) {
   try {
     const { userId, amount } = req.body;
     const result = await userService.payFines(userId, amount);
@@ -84,9 +85,9 @@ payFines : async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-},
+}
 
- giveFeedback : async (req, res) => {
+async function giveFeedback(req, res) {
   try {
     const feedbackDetails = req.body;
     const result = await userService.giveFeedback(feedbackDetails);
@@ -95,9 +96,9 @@ payFines : async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-},
+}
 
-donateBook :async (req, res) => {
+async function donateBook(req, res) {
   try {
     const donationDetails = req.body;
     const result = await userService.donateBook(donationDetails);
@@ -107,6 +108,16 @@ donateBook :async (req, res) => {
     res.status(500).json({ message: 'Internal Server Error' });
   }
 }
-}
 
-export default userController;
+export {
+  donateBook,
+  giveFeedback,
+  followLibraryPoliciesAndGuidelines,
+  functionpayFines,
+  updatePersonalInformation,
+  offerFeedback,
+  checkOutBook,
+  placeHoldOnBook,
+  viewAccountStatus,
+  exploreLibraryCatalog
+};
