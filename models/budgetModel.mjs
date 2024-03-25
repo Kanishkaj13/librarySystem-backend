@@ -1,5 +1,3 @@
-// budgetModel.js
-
 import mongoose from'mongoose';
 
 const budgetSchema = new mongoose.Schema({
