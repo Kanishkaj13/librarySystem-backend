@@ -1,18 +1,14 @@
-import { Router } from 'express';
-import {
-    getAllBooks,
-    getBook,
-    postBook,
-    updateBook,
-    deleteBook,
-} from '../controllers/bookController.mjs';
-import { authenticateToken } from "../middlewares/authenticationMiddleware.mjs";
-const router = Router();
+// bookRoutes.js
+import express from 'express';
+import authenticateToken from '../middlewares/authenticationMiddleware.mjs';
+import bookController from '../controllers/bookController.mjs';
 
-router.get('/', authenticateToken, getAllBooks);
-router.post('/', authenticateToken, postBook);
-router.get('/:id', authenticateToken, getBook);
-router.put('/:id', authenticateToken, updateBook);
-router.delete('/:id', authenticateToken, deleteBook);
+const router = express.Router();
+
+router.get('/', authenticateToken, bookController.getAllBooks);
+router.post('/', authenticateToken, bookController.postBook);
+router.get('/:id', authenticateToken, bookController.getBook);
+router.put('/:id', authenticateToken, bookController.updateBook);
+router.delete('/:id', authenticateToken, bookController.deleteBook);
 
 export default router;

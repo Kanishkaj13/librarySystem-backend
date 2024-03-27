@@ -1,20 +1,15 @@
-import { Router } from 'express';
-import {
-    provideBookInformation,
-    assistCatalogingAndOrganizing,
-    assistInProcessingBorrowingsAndReturns,
-    helpManageOverdueFinesAndFees,
-    helpWithBookSearchAndCheckouts,
-    ensureProperShelvingAndMaintainOrder,
-} from '../controllers/assistantLibrarianController.mjs';
-import { authenticateToken } from "../middlewares/authenticationMiddleware.mjs";
-const router = Router();
+// assistantLibrarianRoutes.js
+import express from 'express';
+import authenticateToken from '../middlewares/authenticationMiddleware.mjs';
+import assistantLibrarianController from '../controllers/assistantLibrarianController.mjs';
 
-router.post('/assist-cataloging-organizing', authenticateToken, assistCatalogingAndOrganizing);
-router.post('/help-with-book-search-checkouts', authenticateToken, helpWithBookSearchAndCheckouts);
-router.post('/assist-borrowings-returns', authenticateToken, assistInProcessingBorrowingsAndReturns);
-router.post('/ensure-proper-shelving-order', authenticateToken, ensureProperShelvingAndMaintainOrder);
-router.post('/help-manage-overdue-fines-fees', authenticateToken, helpManageOverdueFinesAndFees);
-router.post('/provide-book-information', authenticateToken, provideBookInformation);
+const router = express.Router();
+
+router.post('/catalog-organize-book', authenticateToken, assistantLibrarianController.assistCatalogingAndOrganizing);
+router.post('/search-checkout-book', authenticateToken, assistantLibrarianController.helpWithBookSearchAndCheckouts);
+router.post('/process-borrow-return', authenticateToken, assistantLibrarianController.assistInProcessingBorrowingsAndReturns);
+router.post('/maintain-shelving-order', authenticateToken, assistantLibrarianController.ensureProperShelvingAndMaintainOrder);
+router.post('/manage-overdue-fines-fees', authenticateToken, assistantLibrarianController.helpManageOverdueFinesAndFees);
+router.post('/provide-book-information', authenticateToken, assistantLibrarianController.provideBookInformation);
 
 export default router;

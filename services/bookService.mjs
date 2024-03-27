@@ -54,4 +54,4 @@ getBook:async(bookId)=> {
 },
 };
 
-export default bookController;
+export default bookService;
