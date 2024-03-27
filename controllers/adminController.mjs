@@ -10,22 +10,10 @@ const adminController={
     throw new error("error in fetching all users");
   }
 },
-
-
- createUser:async(req, res) =>{
-  try {
-    const userData = req.body;
-    await adminService.createUser(userData);
-    res.json({ message: 'User created successfully' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
-  }
-},
-
  assignRolesAndPermissions:async(req, res)=> {
   const { userId, roles, permissions } = req.body;
   if (!userId || !roles || !permissions) {
+ 
     res.status(400);
     throw new error("all fields are mandotory")
   }

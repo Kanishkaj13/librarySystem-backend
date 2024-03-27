@@ -1,5 +1,5 @@
 import accountantService from "../services/accountantService.mjs";
-const aacountantController={
+const accountantController={
  monitorAndManageBudget:async(req, res) =>{
   try {
     const result = await accountantService.monitorAndManageBudget();

@@ -1,5 +1,4 @@
 // userRoutes.js
-// userRoutes.js
 import express from 'express';
 import authenticateToken from '../middlewares/authenticationMiddleware.mjs';
 import userController from '../controllers/userController.mjs';
@@ -14,7 +13,7 @@ router.post('/offer-feedback', authenticateToken, userController.offerFeedback);
 router.put('/update-personal-information', authenticateToken, userController.updatePersonalInformation);
 router.get('/follow-library-policies', authenticateToken, userController.followLibraryPoliciesAndGuidelines);
 router.post('/pay-fines', authenticateToken, userController.payFines);
-router.post('/give-feedback', authenticateToken, userController.giveFeedback);
-router.post('/donate-book', authenticateToken, userController.donateBook);
+router.post('/give-feedback', authenticateToken,userController.giveFeedback);
+router.post('/donate-book', authenticateToken,userController.donateBook);
 
 export default router;

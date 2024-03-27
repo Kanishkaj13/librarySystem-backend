@@ -77,7 +77,7 @@ offerFeedback:async(req, res)=> {
   }
 },
 
- functionpayFines:async(req, res)=> {
+ payFines:async(req, res)=> {
   try {
     const { userId, amount } = req.body;
     const result = await userService.payFines(userId, amount);

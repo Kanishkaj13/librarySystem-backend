@@ -66,4 +66,4 @@ ensureProperShelvingAndMaintainOrder:async(req, res) =>{
 }
 };
 
-export default assistantLibrarianController;
+export default assistantLibrarinController;

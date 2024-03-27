@@ -5,8 +5,8 @@ import accountantController from '../controllers/accountantController.mjs';
 
 const router = express.Router();
 
-router.get('/monitor-manage-budget', authenticateToken, accountantController.monitorAndManageBudget);
-router.post('/handle-fines', authenticateToken, accountantController.handleFines);
+router.get('/monitor-manage-budget',authenticateToken,accountantController.monitorAndManageBudget);
+router.post('/handle-fines', authenticateToken,accountantController.handleFines);
 router.post('/track-record-expenses', authenticateToken, accountantController.trackAndRecordExpenses);
 router.post('/interact-with-vendors', authenticateToken, accountantController.interactWithVendors);
 router.get('/assist-in-planning-financial-allocations', authenticateToken, accountantController.assistInPlanningFinancialAllocations);
