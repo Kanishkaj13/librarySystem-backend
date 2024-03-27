@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/userModel.mjs";
 
-async function authenticateToken(req, res, next) {
+export const authenticateToken=async(req, res, next)=> {
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ username });

@@ -1,15 +1,14 @@
 import Book from '../models/bookModel.mjs';
-
-async function getAllBooks() {
+const bookService = {
+getAllBooks:async() =>{
   try {
     const books = await Book.find();
     return books;
   } catch (error) {
     throw new Error(`Error fetching books: ${error.message}`);
   }
-}
-
-async function postBook(bookData) {
+},
+ postBook:async(bookData) =>{
   try {
     const newBook = new Book(bookData);
     await newBook.save();
@@ -17,9 +16,9 @@ async function postBook(bookData) {
   } catch (error) {
     throw new Error(`Error adding book: ${error.message}`);
   }
-}
+},
 
-async function getBook(bookId) {
+getBook:async(bookId)=> {
   try {
     const book = await Book.findById(bookId);
     if (!book) {
@@ -29,9 +28,9 @@ async function getBook(bookId) {
   } catch (error) {
     throw new Error(`Error fetching book: ${error.message}`);
   }
-}
+},
 
-async function updateBook(bookId, bookData) {
+ updateBook:async(bookId, bookData) =>{
   try {
     const updatedBook = await Book.findByIdAndUpdate(bookId, bookData, { new: true });
     if (!updatedBook) {
@@ -40,9 +39,9 @@ async function updateBook(bookId, bookData) {
   } catch (error) {
     throw new Error(`Error updating book: ${error.message}`);
   }
-}
+},
 
-async function deleteBook(bookId) {
+ deleteBook:async(bookId)=> {
   try {
     const deletedBook = await Book.findByIdAndDelete(bookId);
     if (!deletedBook) {
@@ -52,12 +51,7 @@ async function deleteBook(bookId) {
   } catch (error) {
     throw new Error(`Error deleting book: ${error.message}`);
   }
-}
-
-export {
-  getAllBooks,
-  getBook,
-  postBook,
-  updateBook,
-  deleteBook
+},
 };
+
+export default bookController;

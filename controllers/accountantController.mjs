@@ -1,73 +1,67 @@
 import accountantService from "../services/accountantService.mjs";
-
-async function monitorAndManageBudget(req, res) {
+const aacountantController={
+ monitorAndManageBudget:async(req, res) =>{
   try {
-    const result = await _monitorAndManageBudget();
+    const result = await accountantService.monitorAndManageBudget();
     res.json(result);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-}
+},
 
-async function handleFines(req, res) {
+handleFines:async(req, res) =>{
   try {
     const { userId, amount } = req.body;
-    const result = await _handleFines(userId, amount);
+    const result = await accountantService.handleFines(userId, amount);
     res.json(result);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-}
+},
 
-async function trackAndRecordExpenses(req, res) {
+trackAndRecordExpenses:async(req, res)=> {
   try {
     const expenseDetails = req.body;
-    const result = await _trackAndRecordExpenses(expenseDetails);
+    const result = await accountantService.trackAndRecordExpenses(expenseDetails);
     res.json(result);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-}
+},
 
-async function interactWithVendors(req, res) {
+ interactWithVendors:async(req, res)=>{
   try {
     const vendorDetails = req.body;
-    const result = await _interactWithVendors(vendorDetails);
+    const result = await accountantService.interactWithVendors(vendorDetails);
     res.json(result);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-}
+},
 
-async function assistInPlanningFinancialAllocations(req, res) {
+ assistInPlanningFinancialAllocations:async(req, res)=> {
   try {
-    const result = await _assistInPlanningFinancialAllocations();
+    const result = await accountantService.assistInPlanningFinancialAllocations();
     res.json(result);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-}
+},
 
-async function provideFinancialAdvice(req,res) {
+ provideFinancialAdvice:async(req,res)=> {
   try {
-    const result = await _provideFinancialAdvice();
+    const result = await accountantService.provideFinancialAdvice();
     res.json(result);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 }
-
-export {
-  monitorAndManageBudget,
-  handleFines,
-  trackAndRecordExpenses,
-  interactWithVendors,
-  assistInPlanningFinancialAllocations,
-  provideFinancialAdvice
 };
+
+export default accountantController;

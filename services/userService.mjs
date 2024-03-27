@@ -5,17 +5,17 @@ import Hold from '../models/holdModel.mjs';
 import Feedback from '../models/feedbackModel.mjs';
 import Donation from '../models/donationModel.mjs';
 
-
-async function exploreLibraryCatalog() {
+const userService={
+ exploreLibraryCatalog:async() =>{
   try {
     const catalogData = await find({}, 'title author quantity isAvailable');
     return catalogData;
   } catch (error) {
     throw new Error(`Error exploring library catalog: ${error.message}`);
   }
-}
+},
 
-async function checkOutBook(userId, bookId) {
+ checkOutBook:async(userId, bookId)=> {
   try {
     const existingBook = await _findById(bookId);
     if (!existingBook || !existingBook.isAvailable) {
@@ -34,9 +34,9 @@ async function checkOutBook(userId, bookId) {
   } catch (error) {
     throw new Error(`Error processing checkout: ${error.message}`);
   }
-}
+},
 
-async function placeHoldOnBook(userId, bookId) {
+placeHoldOnBook:async(userId, bookId)=> {
   try {
     const holdData = {
       userId,
@@ -49,9 +49,9 @@ async function placeHoldOnBook(userId, bookId) {
   } catch (error) {
     throw new Error(`Error placing hold: ${error.message}`);
   }
-}
+},
 
-async function viewAccountStatus(userId) {
+viewAccountStatus:async(userId)=>{
   try {
     const userData = await findById(userId);
     if (!userData) {
@@ -66,9 +66,9 @@ async function viewAccountStatus(userId) {
   } catch (error) {
     throw new Error(`Error viewing account status: ${error.message}`);
   }
-}
+},
 
-async function offerFeedback(feedbackDetails) {
+offerFeedback:async(feedbackDetails)=> {
   try {
     const newFeedback = new Feedback(feedbackDetails);
     await newFeedback.save();
@@ -76,36 +76,36 @@ async function offerFeedback(feedbackDetails) {
   } catch (error) {
     throw new Error(`Error offering feedback: ${error.message}`);
   }
-}
+},
 
-async function updatePersonalInformation(userId, updatedData) {
+ updatePersonalInformation:async(userId, updatedData)=> {
   try {
     await findByIdAndUpdate(userId, { $set: updatedData });
     return { message: 'Personal information updated successfully' };
   } catch (error) {
     throw new Error(`Error updating personal information: ${error.message}`);
   }
-}
+},
 
-async function followLibraryPoliciesAndGuidelines() {
+followLibraryPoliciesAndGuidelines:async() =>{
   try {
     const policyData = await Policies.find();
     return policyData;
   } catch (error) {
     throw new Error(`Error fetching library policies and guidelines: ${error.message}`);
   }
-}
+},
 
-async function payFines(userId, amount) {
+payFines:async(userId, amount)=> {
   try {
     await findByIdAndUpdate(userId, { $inc: { fines: -amount } });
     return { message: 'Fines paid successfully' };
   } catch (error) {
     throw new Error(`Error paying fines: ${error.message}`);
   }
-}
+},
 
-async function giveFeedback(feedbackDetails) {
+ giveFeedback:async(feedbackDetails)=> {
   try {
     const newFeedback = new Feedback(feedbackDetails);
     await newFeedback.save();
@@ -113,9 +113,9 @@ async function giveFeedback(feedbackDetails) {
   } catch (error) {
     throw new Error(`Error giving feedback: ${error.message}`);
   }
-}
+},
 
-async function donateBook(donationDetails) {
+donateBook:async(donationDetails) =>{
   try {
     const newDonation = new Donation(donationDetails);
     await newDonation.save();
@@ -125,16 +125,6 @@ async function donateBook(donationDetails) {
   }
 
 }
-
-export {
-  donateBook,
-  giveFeedback,
-  followLibraryPoliciesAndGuidelines,
-  payFines,
-  offerFeedback,
-  checkOutBook,
-  placeHoldOnBook,
-  exploreLibraryCatalog,
-  viewAccountStatus,
-  updatePersonalInformation
 };
+
+export default userService;

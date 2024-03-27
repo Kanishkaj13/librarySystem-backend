@@ -1,129 +1,122 @@
 import Book from '../models/bookModel.mjs';
 import Transaction from '../models/transactionModel.mjs';
 import User from '../models/userModel.mjs';
-import report from '../models/reportModel.mjs';
+import Report from '../models/reportModel.mjs';
 
-async function createUser(userData) {
-  try {
-    const existingUser = await User.findOne({ username: userData.username });
-    if (existingUser) {
-      throw new Error('Username already exists');
+const librarianService = {
+  createUser: async (userData) => {
+    try {
+      const existingUser = await User.findOne({ username: userData.username });
+      if (existingUser) {
+        throw new Error('Username already exists');
+      }
+      const newUser = new User(userData);
+      await newUser.save();
+      return { message: 'User created successfully' };
+    } catch (error) {
+      throw new Error(`Error creating user: ${error.message}`);
     }
-    const newUser = new User(userData);
-    await newUser.save();
-    return { message: 'User created successfully' };
-  } catch (error) {
-    throw new Error(`Error creating user: ${error.message}`);
-  }
-}
+  },
 
-async function addBook(bookData) {
-  const newBook = new Book(bookData);
-  await newBook.save();
-  return { message: 'Book added successfully' };
-}
+  addBook: async (bookData) => {
+    const newBook = new Book(bookData);
+    await newBook.save();
+    return { message: 'Book added successfully' };
+  },
 
-async function editBook(bookId, updatedData) {
-  await findByIdAndUpdate(bookId, { $set: updatedData });
-  return { message: 'Book updated successfully' };
-}
+  editBook: async (bookId, updatedData) => {
+    try {
+      const updatedBook = await Book.findByIdAndUpdate(bookId, { $set: updatedData }, { new: true });
+      if (!updatedBook) {
+        throw new Error('Book not found');
+      }
+      return { message: 'Book updated successfully', updatedBook };
+    } catch (error) {
+      throw new Error(`Error editing book: ${error.message}`);
+    }
+  },
 
-async function removeBook(bookId) {
-  await findByIdAndRemove(bookId);
-  return { message: 'Book removed successfully' };
-}
+  removeBook: async (bookId) => {
+    try {
+      const deletedBook = await Book.findByIdAndRemove(bookId);
+      if (!deletedBook) {
+        throw new Error('Book not found');
+      }
+      return { message: 'Book removed successfully', deletedBook };
+    } catch (error) {
+      throw new Error(`Error removing book: ${error.message}`);
+    }
+  },
 
-async function reviewHoldsAndRequests() {
-  try {
-    const holdsAndRequestsData = await find({ action: 'hold' })
-      .populate('userId', 'username')
-      .populate('bookId', 'title author');
-    const formattedData = holdsAndRequestsData.map(transaction => ({
-      user: transaction.userId.username,
-      book: {
-        title: transaction.bookId.title,
-        author: transaction.bookId.author,
-      },
-      timestamp: transaction.timestamp,
-    }));
-    return formattedData;
-  } catch (error) {
-    throw new Error(`Error reviewing holds and requests: ${error.message}`);
-  }
-}
+  reviewHoldsAndRequests: async () => {
+    try {
+      const holdsAndRequestsData = await Transaction.find({ action: 'hold' })
+        .populate('userId', 'username')
+        .populate('bookId', 'title author');
+      const formattedData = holdsAndRequestsData.map(transaction => ({
+        user: transaction.userId.username,
+        book: {
+          title: transaction.bookId.title,
+          author: transaction.bookId.author,
+        },
+        timestamp: transaction.timestamp,
+      }));
+      return formattedData;
+    } catch (error) {
+      throw new Error(`Error reviewing holds and requests: ${error.message}`);
+    }
+  },
 
-async function processCheckout(userId, bookId) {
-  try {
-    const transactionData = {
-      userId,
-      bookId,
-      action: 'checkout',
-      timestamp: new Date(),
-    };
-    const newTransaction = new Transaction(transactionData);
-    await newTransaction.save();
-    await findByIdAndUpdate(bookId, { $set: { isAvailable: false } });
-    return { message: 'Checkout processed successfully' };
-  } catch (error) {
-    throw new Error(`Error processing checkout: ${error.message}`);
-  }
-}
+  processCheckout: async (userId, bookId) => {
+    try {
+      const newTransaction = new Transaction({ userId, bookId, action: 'checkout', timestamp: new Date() });
+      await newTransaction.save();
+      await Book.findByIdAndUpdate(bookId, { $set: { isAvailable: false } });
+      return { message: 'Checkout processed successfully' };
+    } catch (error) {
+      throw new Error(`Error processing checkout: ${error.message}`);
+    }
+  },
 
-async function processReturn(userId, bookId) {
-  const transactionData = {
-    userId,
-    bookId,
-    action: 'return',
-    timestamp: new Date(),
-  };
-  const newTransaction = new Transaction(transactionData);
-  await newTransaction.save();
-  await findByIdAndUpdate(bookId, { $set: { isAvailable: true } });
-  return { message: 'Return processed successfully' };
-}
+  processReturn: async (userId, bookId) => {
+    try {
+      const newTransaction = new Transaction({ userId, bookId, action: 'return', timestamp: new Date() });
+      await newTransaction.save();
+      await Book.findByIdAndUpdate(bookId, { $set: { isAvailable: true } });
+      return { message: 'Return processed successfully' };
+    } catch (error) {
+      throw new Error(`Error processing return: ${error.message}`);
+    }
+  },
 
-async function manageFinesAndFees(userId, amount) {
-  try {
-    await _findByIdAndUpdate(userId, { $inc: { fines: amount } });
-    return { message: 'Fines and fees managed successfully' };
-  } catch (error) {
-    throw new Error(`Error managing fines and fees: ${error.message}`);
-  }
-}
+  manageFinesAndFees: async (userId, amount) => {
+    try {
+      await User.findByIdAndUpdate(userId, { $inc: { fines: amount } });
+      return { message: 'Fines and fees managed successfully' };
+    } catch (error) {
+      throw new Error(`Error managing fines and fees: ${error.message}`);
+    }
+  },
 
-async function generateReportsAndStatistics() {
-  try {
-    const totalTransactions = await _countDocuments();
-    const totalAvailableBooks = await countDocuments({ isAvailable: true });
-    const reportsAndStatisticsData = {
-      totalTransactions,
-      totalAvailableBooks,
-    };
-    return reportsAndStatisticsData;
-  } catch (error) {
-    throw new Error(`Error generating reports and statistics: ${error.message}`);
-  }
-}
+  generateReportsAndStatistics: async () => {
+    try {
+      const totalTransactions = await Transaction.countDocuments();
+      const totalAvailableBooks = await Book.countDocuments({ isAvailable: true });
+      const reportsAndStatisticsData = { totalTransactions, totalAvailableBooks };
+      return reportsAndStatisticsData;
+    } catch (error) {
+      throw new Error(`Error generating reports and statistics: ${error.message}`);
+    }
+  },
 
-async function manageUserAccounts(userId, updatedData) {
-  try {
-    await _findByIdAndUpdate(userId, { $set: updatedData });
-    return { message: 'User account managed successfully' };
-  } catch (error) {
-    throw new Error(`Error managing user accounts: ${error.message}`);
-  }
-}
-
-export {
-  manageFinesAndFees,
-  manageUserAccounts,
-  generateReportsAndStatistics,
-  createUser,
-  generateReportsAndStatistics,
-  addBook,
-  editBook,
-  removeBook,
-  processCheckout,
-  processReturn,
-  reviewHoldsAndRequests
+  manageUserAccounts: async (userId, updatedData) => {
+    try {
+      await User.findByIdAndUpdate(userId, { $set: updatedData });
+      return { message: 'User account managed successfully' };
+    } catch (error) {
+      throw new Error(`Error managing user accounts: ${error.message}`);
+    }
+  },
 };
+
+export default librarianService;

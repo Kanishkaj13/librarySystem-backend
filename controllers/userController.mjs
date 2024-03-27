@@ -1,7 +1,7 @@
 // userController.js
 import userService from "../services/userService.mjs";
-
-async function exploreLibraryCatalog(req, res) {
+const userController={
+exploreLibraryCatalog:async(req, res) =>{
   try {
     const result = await userService.exploreLibraryCatalog();
     res.json(result);
@@ -9,9 +9,10 @@ async function exploreLibraryCatalog(req, res) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-}
+},
 
-async function checkOutBook(req, res) {
+
+checkOutBook:async(req, res) =>{
   try {
     const { userId, bookId } = req.body;
     const result = await userService.checkOutBook(userId, bookId);
@@ -20,9 +21,9 @@ async function checkOutBook(req, res) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-}
+},
 
-async function placeHoldOnBook(req, res) {
+ placeHoldOnBook:async(req, res)=> {
   try {
     const { userId, bookId } = req.body;
     const result = await userService.placeHoldOnBook(userId, bookId);
@@ -31,9 +32,9 @@ async function placeHoldOnBook(req, res) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-}
+},
 
-async function viewAccountStatus(req, res) {
+ viewAccountStatus:async(req, res)=> {
   try {
     const { userId } = req.params;
     const result = await userService.viewAccountStatus(userId);
@@ -42,9 +43,9 @@ async function viewAccountStatus(req, res) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-}
+},
 
-async function offerFeedback(req, res) {
+offerFeedback:async(req, res)=> {
   try {
     const feedbackDetails = req.body;
     const result = await userService.offerFeedback(feedbackDetails);
@@ -53,9 +54,9 @@ async function offerFeedback(req, res) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-}
+},
 
-async function updatePersonalInformation(req, res) {
+ updatePersonalInformation:async(req, res)=> {
   try {
     const { userId, updatedData } = req.body;
     const result = await userService.updatePersonalInformation(userId, updatedData);
@@ -64,9 +65,9 @@ async function updatePersonalInformation(req, res) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-}
+},
 
-async function followLibraryPoliciesAndGuidelines(req, res) {
+ followLibraryPoliciesAndGuidelines:async(req, res) =>{
   try {
     const result = await userService.followLibraryPoliciesAndGuidelines();
     res.json(result);
@@ -74,9 +75,9 @@ async function followLibraryPoliciesAndGuidelines(req, res) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-}
+},
 
-async function functionpayFines(req, res) {
+ functionpayFines:async(req, res)=> {
   try {
     const { userId, amount } = req.body;
     const result = await userService.payFines(userId, amount);
@@ -85,20 +86,20 @@ async function functionpayFines(req, res) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-}
+},
 
-async function giveFeedback(req, res) {
+ giveFeedback:async(req, res) =>{
   try {
     const feedbackDetails = req.body;
     const result = await userService.giveFeedback(feedbackDetails);
     res.json(result);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
+    res.status(500).json({ message: 'Internal Server Error'});
   }
-}
+},
 
-async function donateBook(req, res) {
+ donateBook:async(req, res) =>{
   try {
     const donationDetails = req.body;
     const result = await userService.donateBook(donationDetails);
@@ -108,16 +109,6 @@ async function donateBook(req, res) {
     res.status(500).json({ message: 'Internal Server Error' });
   }
 }
-
-export {
-  donateBook,
-  giveFeedback,
-  followLibraryPoliciesAndGuidelines,
-  functionpayFines,
-  updatePersonalInformation,
-  offerFeedback,
-  checkOutBook,
-  placeHoldOnBook,
-  viewAccountStatus,
-  exploreLibraryCatalog
 };
+
+export default userController;

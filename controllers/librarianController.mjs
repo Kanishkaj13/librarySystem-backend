@@ -1,7 +1,7 @@
 // librarianController.js
 import  librarianService from "../services/librarianService.mjs";
-
-async function createUser(req, res) {
+const librarianController={
+ createUser:async(req, res)=> {
     try {
       const userData = req.body;
       await librarianService.createUser(userData);
@@ -10,9 +10,9 @@ async function createUser(req, res) {
       console.error(error);
       res.status(500).json({ message: 'Internal Server Error' });
     }
-  }
+  },
 
-async function addBook(req, res) {
+addBook:async(req, res)=> {
   try {
     const bookData = req.body;
     const result = await librarianService.addBook(bookData);
@@ -21,9 +21,8 @@ async function addBook(req, res) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-}
-
-async function editBook(req, res) {
+},
+editBook:async(req, res) =>{
   try {
     const { bookId } = req.params;
     const updatedData = req.body;
@@ -33,9 +32,9 @@ async function editBook(req, res) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-}
+},
 
-async function removeBook(req, res) {
+ removeBook:async(req, res) =>{
   try {
     const { bookId } = req.params;
     const result = await librarianService.removeBook(bookId);
@@ -44,9 +43,9 @@ async function removeBook(req, res) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-}
+},
 
-async function reviewHoldsAndRequests(req, res) {
+ reviewHoldsAndRequests:async(req, res)=> {
   try {
     const holdsAndRequestsData = await librarianService.reviewHoldsAndRequests();
     res.json(holdsAndRequestsData);
@@ -54,9 +53,9 @@ async function reviewHoldsAndRequests(req, res) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-}
+},
 
-async function processCheckout(req, res) {
+processCheckout:async(req, res)=> {
   try {
     const { userId, bookId } = req.body;
     const result = await librarianService.processCheckout(userId, bookId);
@@ -65,9 +64,9 @@ async function processCheckout(req, res) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-}
+},
 
-async function processReturn(req, res) {
+processReturn:async(req, res)=> {
   try {
     const { userId, bookId } = req.body;
     const result = await librarianService.processReturn(userId, bookId);
@@ -76,9 +75,8 @@ async function processReturn(req, res) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-}
-
-async function manageFinesAndFees(req, res) {
+},
+ manageFinesAndFees:async(req, res) =>{
   try {
     const { userId, amount } = req.body;
     const result = await librarianService.manageFinesAndFees(userId, amount);
@@ -87,9 +85,9 @@ async function manageFinesAndFees(req, res) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-}
+},
 
-async function generateReportsAndStatistics(req, res) {
+ generateReportsAndStatistics:async(req, res) =>{
   try {
     const reportsAndStatisticsData = await librarianService.generateReportsAndStatistics();
     res.json(reportsAndStatisticsData);
@@ -97,9 +95,9 @@ async function generateReportsAndStatistics(req, res) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-}
+},
 
-async function manageUserAccounts(req, res) {
+ manageUserAccounts:async(req, res) =>{
   try {
     const { userId } = req.params;
     const updatedData = req.body;
@@ -110,17 +108,6 @@ async function manageUserAccounts(req, res) {
     res.status(500).json({ message: 'Internal Server Error' });
   }
 }
-
-
-export {
-  createUser,
-  addBook,
-  manageFinesAndFees,
-  manageUserAccounts,
-  processCheckout,
-  processReturn,
-  removeBook,
-  editBook,
-  reviewHoldsAndRequests,
-  generateReportsAndStatistics
 };
+
+export default librarianController;

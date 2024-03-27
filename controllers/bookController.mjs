@@ -45,10 +45,4 @@ async function deleteBook(req, res) {
   }
 };
 
-export {
-  getAllBooks,
-  getBook,
-  postBook,
-  updateBook,
-  deleteBook,
-};
+export default bookController;

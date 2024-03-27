@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-async function authorizeRoles(req, res, next) {
+export const authorizeRoles=async(req, res, next)=> {
   let token;
   const authHeader = req.headers.authorization;
 
