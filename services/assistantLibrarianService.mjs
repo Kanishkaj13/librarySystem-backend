@@ -1,6 +1,7 @@
 import Book from '../models/bookModel.mjs';
 import Transaction from '../models/transactionModel.mjs';
-import  user from '../models/userModel.mjs';
+import User from '../models/userModel.mjs';
+
 
 const assistantLibrarianService = {
   assistCatalogingAndOrganizing: async (bookData) => {
@@ -17,6 +18,8 @@ const assistantLibrarianService = {
     try {
       const book = await findOne({ title: bookTitle, isAvailable: true });
         if (book) {
+          const user = await User.findById(userId);
+          if(user){
         const newTransaction = new Transaction({ userId, bookId: book._id, action: 'checkout' });
         await newTransaction.save();
         await findByIdAndUpdate(book._id, { $set: { isAvailable: false } });
@@ -24,9 +27,11 @@ const assistantLibrarianService = {
       } else {
         return { message: 'Book not found or unavailable' };
       }
+    }
     } catch (error) {
       throw new Error(`Error helping with book search and checkouts: ${error.message}`);
     }
+  
   },
 
   assistInProcessingBorrowingsAndReturns: async (userId, bookId, action) => {

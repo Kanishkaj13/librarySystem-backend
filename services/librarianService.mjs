@@ -4,22 +4,25 @@ import User from '../models/userModel.mjs';
 import Report from '../models/reportModel.mjs';
 
 const librarianService = {
-  createUser: async (userData) => {
-    try {
-      const existingUser = await User.findOne({ username: userData.username });
-      if (existingUser) {
-        throw new Error('Username already exists');
-      }
-      const newUser = new User(userData);
-      await newUser.save();
-      return { message: 'User created successfully' };
-    } catch (error) {
-      throw new Error(`Error creating user: ${error.message}`);
+
+  registerUser:async(username, email, password, roles)=> {
+    const userAvailable = await User.findOne({ email });
+    if (userAvailable) {
+      throw new Error("User already registered");
     }
+    //Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await User.create({
+      username,
+      email,
+      password: hashedPassword,
+      roles
+    });
+    return user;
   },
 
-  addBook: async (bookData) => {
-    const newBook = new Book(bookData);
+ addBook: async (bookData) => {
+   const newBook = new Book(bookData);
     await newBook.save();
     return { message: 'Book added successfully' };
   },

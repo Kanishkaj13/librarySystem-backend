@@ -1,22 +1,31 @@
 // librarianController.js
 import  librarianService from "../services/librarianService.mjs";
 const librarianController={
- createUser:async(req, res)=> {
-    try {
-      const userData = req.body;
-      await librarianService.createUser(userData);
-      res.json({ message: 'User created successfully' });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Internal Server Error' });
+  registerUser:async(req, res)=> {
+    const { username, email, password, roles } = req.body;
+    if (!username || !email || !password) {
+      res.status(400);
+      throw new Error("All fields are mandatory");
+    }
+    const user = await adminService.registerUser(username, email, password, roles);
+    if (user) {
+      res.status(201).json({ _id: user._id, email: user.email });
+    } else {
+      res.status(400);
+      throw new Error("User data is not valid");
     }
   },
 
 addBook:async(req, res)=> {
   try {
-    const bookData = req.body;
+    const { title, author, quantity } = req.body;
+    if (!title || !author || !quantity) {
+      res.status(400).json({ error: "All fields are necessary" });
+      return;
+    }
+    const bookData = { title, author, quantity };
     const result = await librarianService.addBook(bookData);
-    res.json(result);
+    res.status(200).json({ message: "Book added successfully", book: result });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });

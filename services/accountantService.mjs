@@ -15,7 +15,7 @@ const accountantService = {
 
   handleFines: async (userId, amount) => {
      try {
-       const budget = budget(budgetDetails);
+      const budget = budget(budgetDetails);
       await User.findByIdAndUpdate(userId, { $inc: { fines: amount } });
       return { message: 'Fines handled successfully' };
     } catch (error) {
@@ -27,8 +27,14 @@ const accountantService = {
   interactWithVendors: async (vendorDetails) => {
 
     try {
-      const budget = budget
-      await vendorService.handleVendorInteraction(req.body);
+      const interaction = new Transaction({
+        type: 'vendor_interaction',
+        details: vendorDetails,
+        timestamp: new Date(),
+      });
+      await interaction.save();
+
+
        res.json({ message: 'Interaction with vendors successful' });
     } catch (error) {
       console.error(error);
@@ -40,10 +46,10 @@ const accountantService = {
   assistInPlanningFinancialAllocations: async () => {
 
     try {
-      
-      await financialService.analyzeBudgetAndExpenses();
-  
-      res.json({ message: 'Assisted in planning financial allocations' });
+      const budget = await Budget.find();
+      const expenses = await Expense.find();
+      const totalExpenses = expenses.reduce((total, expense) => total + expense.amount, 0);
+      res.json({ message:'Assisted in planning financial allocations' });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Internal Server Error' });

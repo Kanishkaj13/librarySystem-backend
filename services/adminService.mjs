@@ -15,19 +15,6 @@ const adminService={
   }
 },
 
-createUser:async(userData)=> {
-  try {
-    const existingUser = await User.findOne({ username: userData.username });
-    if (existingUser) {
-      throw new Error('Username already exists');
-    }
-    const newUser = new User(userData);
-    await newUser.save();
-    return { message: 'User created successfully' };
-  } catch (error) {
-    throw new Error(`Error creating user: ${error.message}`);
-  }
-},
 
  registerUser:async(username, email, password, roles)=> {
   const userAvailable = await User.findOne({ email });
