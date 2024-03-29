@@ -43,19 +43,23 @@ const adminService={
   return { message: 'Roles and permissions assigned successfully' };
 },
 
-addOrUpdateBook:async(bookData)=> {
-  const existingBook = await Book.findOne({ title: bookData.title });
-  if (existingBook) {
-    existingBook.quantity += bookData.quantity;
-    await existingBook.save();
-    return { message: 'Existing book updated successfully' };
-  } else {
-    const newBook = new Book(bookData);
-    await newBook.save();
-    return { message: 'New book added successfully' };
-  }
-},
+addBook: async (bookData) => {
+  const newBook = new Book(bookData);
+   await newBook.save();
+   return { message: 'Book added successfully' };
+ },
 
+ updateBook: async (bookId, updatedData) => {
+   try {
+     const updatedBook = await Book.findByIdAndUpdate(bookId, { $set: updatedData }, { new: true });
+     if (!updatedBook) {
+       throw new Error('Book not found');
+     }
+     return { message: 'Book updated successfully', updatedBook };
+   } catch (error) {
+     throw new Error(`Error editing book: ${error.message}`);
+   }
+ },
 registerMemberIssue:async(issueDetails) =>{
   await User.findByIdAndUpdate({ _id: issueDetails.userId },
     { $set: { issues: [issueDetails] } }, { upsert: true });

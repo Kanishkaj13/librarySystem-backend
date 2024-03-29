@@ -34,7 +34,7 @@ const librarianController={
 
 editBook:async(req, res) =>{
   try {
-    const { bookId } = req.params;
+    const { bookId } = await findById(req.params);
     const { title, author, quantity } = req.body;
     if (!title ||!author || !quantity) {
       res.status(400).json({ error: "At least one field is required for updating the book" });
@@ -50,8 +50,12 @@ editBook:async(req, res) =>{
 },
 removeBook: async (req, res) => {
   try {
-    const { bookId } = req.params;
-    const result = await librarianService.removeBook(bookId);
+    const {bookId}  =await findById (req.params);
+    if(!book){
+      res.status(400).res.status({error:"book not found"});
+      return;
+    }
+    const result = await librarianService.removeOne(req.parms);
     res.status(200).json({ message: "Book removed successfully", book: result });
   } catch (error) {
     console.error(error);

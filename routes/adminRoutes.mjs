@@ -7,7 +7,8 @@ const router = express.Router();
 
 router.get('/get-all-users',authenticateToken,adminController.getAllUsers);
 router.post('/assign-roles-permissions', authenticateToken, adminController.assignRolesAndPermissions);
-router.post('/add-update-book', authenticateToken, adminController.addOrUpdateBook);
+router.post('/add-book', authenticateToken, adminController.addBook);
+router.post('/update-book',authenticateToken,adminController.updateBook);
 router.post('/track-borrowing-returns', authenticateToken, adminController.trackBorrowingAndReturns);
 router.post('/manage-overdue-fines', authenticateToken, adminController.manageOverdueFines);
 router.post('/generate-library-report', authenticateToken, adminController.generateLibraryReport);
