@@ -1,7 +1,6 @@
 import Book from '../models/bookModel.mjs';
 import Transaction from '../models/transactionModel.mjs';
 import User from '../models/userModel.mjs';
-import Report from '../models/reportModel.mjs';
 
 const librarianService = {
 

@@ -19,7 +19,7 @@ const adminController={
   }
   const user = await adminService.assignRolesAndPermissions(userId, roles, permissions);
   if (username) {
-    res.status(200).json({ _id: user_.id, roles: user.roles });
+    res.status(200).json({ _id: user.id, roles: user.roles });
   } else {
 
     res.status(400);

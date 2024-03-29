@@ -15,49 +15,54 @@ const librarianController={
       throw new Error("User data is not valid");
     }
   },
-
-addBook:async(req, res)=> {
-  try {
-    const { title, author, quantity } = req.body;
-    if (!title || !author || !quantity) {
-      res.status(400).json({ error: "All fields are necessary" });
-      return;
+  addBook: async (req, res) => {
+    try {
+      const { title, author, quantity } = req.body;
+      if (!title || !author || !quantity) {
+        res.status(400).json({ error: "All fields are necessary" });
+        return;
+      }
+      const bookData = { title, author, quantity };
+      const result = await librarianService.addBook(bookData);
+      res.status(200).json({ message: "Book added successfully", book: result });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
     }
-    const bookData = { title, author, quantity };
-    const result = await librarianService.addBook(bookData);
-    res.status(200).json({ message: "Book added successfully", book: result });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
-  }
-},
+  },
+  
+
 editBook:async(req, res) =>{
   try {
     const { bookId } = req.params;
-    const updatedData = req.body;
+    const { title, author, quantity } = req.body;
+    if (!title ||!author || !quantity) {
+      res.status(400).json({ error: "At least one field is required for updating the book" });
+      return;
+    }
+    const updatedData = { title, author, quantity };
     const result = await librarianService.editBook(bookId, updatedData);
-    res.json(result);
+    res.status(200).json({ message: "Book updated successfully", book: result });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 },
-
- removeBook:async(req, res) =>{
+removeBook: async (req, res) => {
   try {
     const { bookId } = req.params;
     const result = await librarianService.removeBook(bookId);
-    res.json(result);
+    res.status(200).json({ message: "Book removed successfully", book: result });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 },
-
- reviewHoldsAndRequests:async(req, res)=> {
+ 
+reviewHoldsAndRequests:async(req, res)=> {
   try {
     const holdsAndRequestsData = await librarianService.reviewHoldsAndRequests();
-    res.json(holdsAndRequestsData);
+    res.status(200).json({holdsAndRequestsData});
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });

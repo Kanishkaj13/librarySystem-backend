@@ -8,7 +8,7 @@ import Donation from '../models/donationModel.mjs';
 const userService={
  exploreLibraryCatalog:async() =>{
   try {
-    const catalogData = await find({}, 'title author quantity isAvailable');
+    const catalogData = await book.find({}, 'title author quantity isAvailable');
     return catalogData;
   } catch (error) {
     throw new Error(`Error exploring library catalog: ${error.message}`);
@@ -17,7 +17,7 @@ const userService={
 
  checkOutBook:async(userId, bookId)=> {
   try {
-    const existingBook = await _findById(bookId);
+    const existingBook = await book.findById(bookId);
     if (!existingBook || !existingBook.isAvailable) {
       throw new Error('Book not available for checkout');
     }
@@ -38,7 +38,11 @@ const userService={
 
 placeHoldOnBook:async(userId, bookId)=> {
   try {
-    const holdData = {
+    const existingBook = await book.findById(bookId);
+    if (!existingBook || !existingBook.isAvailable) {
+      throw new Error('Book not available to place hold');
+    }
+     const holdData = {
       userId,
       bookId,
       timestamp: new Date(),
@@ -53,7 +57,7 @@ placeHoldOnBook:async(userId, bookId)=> {
 
 viewAccountStatus:async(userId)=>{
   try {
-    const userData = await findById(userId);
+    const userData= await user.findById(userId);
     if (!userData) {
       throw new Error('User not found');
     }
@@ -80,7 +84,7 @@ offerFeedback:async(feedbackDetails)=> {
 
  updatePersonalInformation:async(userId, updatedData)=> {
   try {
-    await findByIdAndUpdate(userId, { $set: updatedData });
+    const user=await user.findByIdAndUpdate(userId, { $set: updatedData });
     return { message: 'Personal information updated successfully' };
   } catch (error) {
     throw new Error(`Error updating personal information: ${error.message}`);
