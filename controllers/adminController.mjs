@@ -26,7 +26,7 @@ registerUser:async(req, res)=> {
   }
 },
 addBook: async (req, res) => {
-  try {
+  
     const { title, author, quantity } = req.body;
     if (!title || !author || !quantity) {
       res.status(400).json({ error: "All fields are necessary" });
@@ -34,16 +34,16 @@ addBook: async (req, res) => {
     }
     const bookData = { title, author, quantity };
     const result = await librarianService.addBook(bookData);
+    if(book){
     res.status(200).json({ message: "Book added successfully", book: result });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
+  } else{
+      res.status(500);
+      throw new error("book not added");
   }
 },
 
 
 updateBook:async(req, res) =>{
-try {
   const { bookId } = await findById(req.params);
   const { title, author, quantity } = req.body;
   if (!title ||!author || !quantity) {
@@ -51,11 +51,12 @@ try {
     return;
   }
   const updatedData = { title, author, quantity };
+  if(book){
   const result = await librarianService.editBook(bookId, updatedData);
   res.status(200).json({ message: "Book updated successfully", book: result });
-} catch (error) {
-  console.error(error);
-  res.status(500).json({ message: 'Internal Server Error' });
+} else{
+  res.status(500);
+  throw new error("book not updated");
 }
 },
 
@@ -71,50 +72,49 @@ try {
   if (username) {
     res.status(200).json({ _id: user.id, roles: user.roles });
   } else {
-
     res.status(400);
     throw new error("permissions is not assigned properly")
   }
 },
 
 trackBorrowingAndReturns:async(req, res)=> {
-  try {
     const { userId, bookId, action } = req.body;
     if(!userId||!bookId||!action){
       res.status(400).res.json({error:"all fields are must"});
       return;
     }
+    if(borrowingAndReturns){
    await adminService.trackBorrowingAndReturns(userId, bookId, action);
     res.json({ message: 'Borrowing/Return tracked successfully' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
+  } else{
+    res.status(500);
+    throw new error("tracking get failed");
   }
 },
 
  manageOverdueFines:async(req, res)=> {
-  try {
+
     const { userId, amount } = req.body;
     if(!userId||!amount){
       res.status(400).res.json({error:"userid and amounts are required fields "});
       return;
     }
      await adminService.manageOverdueFines(userId, amount);
+     if(overdueFines){
     res.json({ message: 'Overdue fines managed successfully' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
+  } else {
+    res.status(500);
+    throw new error("overdue fines not managed properly");
   }
 },
 
  generateLibraryReport:async(req, res)=> {
-     try {
-    
     const reportData=await adminService.generateLibraryReport();
+    if(libraryReport){
     res.json({ message: 'Library report generated successfully' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
+  } else {
+    res.status(500);
+   throw new error("library report generated failed");
   }
 }
 }
