@@ -7,7 +7,7 @@ const librarianController={
       res.status(400);
       throw new Error("All fields are mandatory");
     }
-    const user = await adminService.registerUser(username, email, password, roles);
+    const user = await librarianService.registerUser(username, email, password, roles);
     if (user) {
       res.status(201).json({ _id: user._id, email: user.email });
     } else {
@@ -16,25 +16,24 @@ const librarianController={
     }
   },
   addBook: async (req, res) => {
-    try {
       const { title, author, quantity } = req.body;
       if (!title || !author || !quantity) {
-        res.status(400).json({ error: "All fields are necessary" });
+        res.status(400).res.json({ error: "All fields are necessary" });
         return;
       }
-      const bookData = { title, author, quantity };
+      const bookData={title,author,quantity};
       const result = await librarianService.addBook(bookData);
+      if(book){
       res.status(200).json({ message: "Book added successfully", book: result });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Internal Server Error' });
+    } else{
+      res.status(400);
+      throw new Error("book not added");
     }
   },
   
 
 editBook:async(req, res) =>{
-  try {
-    const { bookId } = await findById(req.params);
+    const { bookId } = await findById(req.params.bookId);
     const { title, author, quantity } = req.body;
     if (!title ||!author || !quantity) {
       res.status(400).json({ error: "At least one field is required for updating the book" });
@@ -42,45 +41,55 @@ editBook:async(req, res) =>{
     }
     const updatedData = { title, author, quantity };
     const result = await librarianService.editBook(bookId, updatedData);
+    if(book){
     res.status(200).json({ message: "Book updated successfully", book: result });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
+  } else{
+    res.status(400);
+    throw new error("book not updated properly");
   }
 },
 removeBook: async (req, res) => {
-  try {
-    const {bookId}  =await findById (req.params);
+    const {bookId}  =await findById (req.params.bookId);
     if(!book){
       res.status(400).res.status({error:"book not found"});
       return;
     }
     const result = await librarianService.removeOne(req.parms);
+    if(book){
     res.status(200).json({ message: "Book removed successfully", book: result });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
-  }
+  } else{
+    res.status(500);
+  throw new error("book not removed")
+}
 },
  
 reviewHoldsAndRequests:async(req, res)=> {
-  try {
+  const { userId, bookId } = req.body
+  if (!userId || !bookId) {
+      res.status(400).json({ error: "userId and bookId are required fields" });
+      return;
+  }
     const holdsAndRequestsData = await librarianService.reviewHoldsAndRequests();
+    if(holdsAndRequestsData){
     res.status(200).json({holdsAndRequestsData});
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
+  } else {
+    res.status(400);
+    res.json("request data not accepted");
   }
 },
 
 processCheckout:async(req, res)=> {
-  try {
     const { userId, bookId } = req.body;
+    if(!userId||!bookId){
+      res.status(400).json({ error: "userId and bookId are required fields" });
+      return; 
+    }
     const result = await librarianService.processCheckout(userId, bookId);
+    if(processCheckOut) {
     res.json(result);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
+  }else {
+    res.status(400);
+    res.json("processing checking out is failed");
   }
 },
 
