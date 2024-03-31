@@ -12,7 +12,15 @@ export const authorizeRoles=async(req, res, next)=> {
         res.status(401).json({ error: "Invalid token" });
         return;
       }
+      const { type } = decoded.user;
+      const allowedRoles = "admin" 
+      const isAuthorized = allowedRoles.some(role => roles.includes(role));
+      if (!isAuthorized) {
+        res.status(403).json({ error: "Access forbidden. User does not have the required role." });
+        return;
+      }
       req.user = decoded.user;
+      req.type= type;
       next();
     } catch (error) {
       res.status(401).json({ error: "Token verification failed" });

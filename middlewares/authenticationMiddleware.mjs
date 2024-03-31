@@ -20,7 +20,7 @@ export const authenticateToken=async(req, res, next)=> {
     }
     console.log(user.username);
     console.log(user.roles);
-    const accessToken = jwt.sign({ userName: user.username, roles: user.roles }, process.env.ACCESS_TOKEN_SECERET,
+    const accessToken = jwt.sign({ userName: user.username, roles: user.roles,userType:user.type }, process.env.ACCESS_TOKEN_SECERET,
       { expiresIn: "15m" }
     );
     console.log(accessToken);

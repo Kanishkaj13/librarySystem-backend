@@ -2,6 +2,7 @@
 import adminService from "../services/adminService.mjs";
 const adminController={
  getAllUsers:async(req, res) =>{
+  const userType=req.user;
   const users = await adminService.getAllUsers();
   if (users) {
     res.status(200).json(users);

@@ -4,7 +4,7 @@ import Transaction from '../models/transactionModel.mjs'
 import Report from '../models/reportModel.mjs'
 import bcrypt from 'bcrypt'
 const adminService={
- getAllUsers:async()=> {
+ getAllUsers:async(userType)=> {
   try {
     const users = await User.find();
     return users;
