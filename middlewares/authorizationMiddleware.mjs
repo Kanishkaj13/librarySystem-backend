@@ -14,7 +14,7 @@ export const authorizeRoles=async(req, res, next)=> {
       }
       const { type } = decoded.user;
       const allowedRoles = "admin" 
-      const isAuthorized = allowedRoles.some(role => roles.includes(role));
+      const isAuthorized = allowedRoles.some(roles => roles.includes(roles));
       if (!isAuthorized) {
         res.status(403).json({ error: "Access forbidden. User does not have the required role." });
         return;

@@ -34,7 +34,7 @@ addBook: async (req, res) => {
       return;
     }
     const bookData = { title, author, quantity };
-    const result = await librarianService.addBook(bookData);
+    const result = await adminService.addBook(bookData);
     if(book){
     res.status(200).json({ message: "Book added successfully", book: result });
   } else{
@@ -45,7 +45,7 @@ addBook: async (req, res) => {
 
 
 updateBook:async(req, res) =>{
-  const { bookId } = await findById(req.params);
+  const { bookId }= req.params;
   const { title, author, quantity } = req.body;
   if (!title ||!author || !quantity) {
     res.status(400).json({ error: "At least one field is required for updating the book" });
@@ -53,7 +53,7 @@ updateBook:async(req, res) =>{
   }
   const updatedData = { title, author, quantity };
   if(book){
-  const result = await librarianService.editBook(bookId, updatedData);
+  const result = await adminService.editBook(bookId, updatedData);
   res.status(200).json({ message: "Book updated successfully", book: result });
 } else{
   res.status(500);
